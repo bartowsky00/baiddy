@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Baiddy — Vivi la città insieme</title>
+    <meta name="description" content="Crea roadmap urbane, unisciti a esperienze condivise e conosci nuove persone nella tua città.">
+
+    <!-- Google tag (GA4) — Replace G-XXXXXXXXXX with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --terracotta: #D4593B;
+            --terracotta-light: #E8765C;
+            --amber: #E9A23B;
+            --amber-light: #F2C56B;
+            --navy: #1C1E2E;
+            --navy-mid: #2A2D42;
+            --cream: #FBF5EC;
+            --cream-dark: #F0E6D6;
+            --warm-gray: #8A8478;
+            --text: #2D2A26;
+            --text-light: #6B665E;
+            --white: #FFFDF9;
+            --radius: 14px;
+            --radius-lg: 22px;
+            --shadow: 0 4px 24px rgba(44, 42, 38, 0.08);
+            --shadow-lg: 0 12px 48px rgba(44, 42, 38, 0.12);
+            --shadow-xl: 0 24px 64px rgba(44, 42, 38, 0.18);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .serif { font-family: 'Instrument Serif', Georgia, serif; }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 14px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(251, 245, 236, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(44, 42, 38, 0.06);
+            padding-top: calc(14px + env(safe-area-inset-top, 0px));
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .nav-logo-img {
+            height: 44px;
+            width: auto;
+        }
+        .nav-cta {
+            background: var(--navy);
+            color: var(--white);
+            border: none; border-radius: 100px;
+            padding: 10px 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem; font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .nav-cta:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh; min-height: 100dvh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            padding: 100px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212, 89, 59, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(233, 162, 59, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(242, 197, 107, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--white);
+            border: 1px solid rgba(212, 89, 59, 0.2);
+            border-radius: 100px;
+            padding: 8px 16px 8px 12px;
+            font-size: 0.8rem; font-weight: 500;
+            color: var(--terracotta);
+            margin-bottom: 28px;
+            animation: fadeInDown 0.8s ease both;
+        }
+        .hero-badge-dot {
+            width: 8px; height: 8px;
+            background: var(--terracotta);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .hero h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.4rem, 8vw, 5.5rem);
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            color: var(--navy);
+            max-width: 780px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.15s both;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--terracotta);
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--text-light);
+            max-width: 520px;
+            line-height: 1.6;
+            margin-bottom: 36px;
+            padding: 0 8px;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .hero-cta-main {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--terracotta);
+            color: var(--white);
+            border: none; border-radius: 100px;
+            padding: 18px 36px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(212, 89, 59, 0.3);
+            animation: fadeInUp 0.8s ease 0.45s both;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hero-cta-main:hover {
+            background: var(--terracotta-light);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212, 89, 59, 0.35);
+        }
+        .hero-cta-main:active { transform: translateY(0); }
+        .hero-cta-main svg { transition: transform 0.3s ease; }
+        .hero-cta-main:hover svg { transform: translateX(3px); }
+
+        /* Secondary CTA (bottom) - no animation */
+        .hero-cta-secondary {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--terracotta);
+            color: var(--white);
+            border: none; border-radius: 100px;
+            padding: 18px 36px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem; font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(212, 89, 59, 0.3);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hero-cta-secondary:hover {
+            background: var(--terracotta-light);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212, 89, 59, 0.35);
+        }
+        .hero-cta-secondary:active { transform: translateY(0); }
+        .hero-cta-secondary svg { transition: transform 0.3s ease; }
+        .hero-cta-secondary:hover svg { transform: translateX(3px); }
+
+        .hero-proof {
+            margin-top: 48px;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 0.82rem; color: var(--warm-gray);
+            animation: fadeInUp 0.8s ease 0.6s both;
+            flex-wrap: wrap; justify-content: center;
+        }
+        .hero-avatars {
+            display: flex;
+        }
+        .hero-avatars span {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--cream);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 600;
+            margin-left: -8px;
+        }
+        .hero-avatars span:first-child { margin-left: 0; }
+        .hero-avatars span:nth-child(1) { background: var(--terracotta-light); color: var(--white); }
+        .hero-avatars span:nth-child(2) { background: var(--amber); color: var(--white); }
+        .hero-avatars span:nth-child(3) { background: var(--navy-mid); color: var(--white); }
+        .hero-avatars span:nth-child(4) { background: var(--cream-dark); color: var(--text); }
+
+        /* --- SECTIONS COMMON --- */
+        section { padding: 80px 20px; }
+        .section-inner { max-width: 1080px; margin: 0 auto; }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--terracotta);
+            margin-bottom: 14px;
+        }
+        .section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            line-height: 1.1;
+            letter-spacing: -1px;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+
+        /* --- VALUE PROP --- */
+        .value {
+            background: var(--white);
+            border-top: 1px solid rgba(44, 42, 38, 0.06);
+            border-bottom: 1px solid rgba(44, 42, 38, 0.06);
+        }
+        .value .section-inner { text-align: center; }
+        .value .section-title { max-width: 640px; margin: 0 auto 48px; }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .value-card {
+            text-align: left;
+            padding: 32px 24px;
+            border-radius: var(--radius-lg);
+            background: var(--cream);
+            border: 1px solid rgba(44, 42, 38, 0.05);
+            transition: all 0.3s ease;
+        }
+        .value-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        .value-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+        }
+        .value-card:nth-child(1) .value-icon { background: rgba(212, 89, 59, 0.1); }
+        .value-card:nth-child(2) .value-icon { background: rgba(233, 162, 59, 0.15); }
+        .value-card:nth-child(3) .value-icon { background: rgba(28, 30, 46, 0.08); }
+
+        .value-card h3 {
+            font-weight: 600; font-size: 1.1rem;
+            margin-bottom: 8px; color: var(--navy);
+        }
+        .value-card p { font-size: 0.92rem; color: var(--text-light); line-height: 1.55; }
+
+        /* --- HOW IT WORKS --- */
+        .how { position: relative; }
+        .how .section-inner { text-align: center; }
+        .how .section-title { max-width: 580px; margin: 0 auto 56px; }
+
+        .steps {
+            display: flex; gap: 0;
+            justify-content: center;
+            position: relative;
+        }
+        .steps::before {
+            content: '';
+            position: absolute; top: 28px;
+            left: calc(16.66% + 20px); right: calc(16.66% + 20px);
+            height: 2px;
+            background: linear-gradient(90deg, var(--terracotta), var(--amber), var(--navy-mid));
+            opacity: 0.2;
+        }
+        .step {
+            flex: 1; max-width: 280px;
+            text-align: center;
+            padding: 0 12px;
+            position: relative;
+        }
+        .step-num {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.3rem;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .step:nth-child(1) .step-num { background: var(--terracotta); color: var(--white); }
+        .step:nth-child(2) .step-num { background: var(--amber); color: var(--white); }
+        .step:nth-child(3) .step-num { background: var(--navy); color: var(--white); }
+
+        .step h3 {
+            font-weight: 600; font-size: 1.05rem;
+            margin-bottom: 6px; color: var(--navy);
+        }
+        .step p { font-size: 0.88rem; color: var(--text-light); line-height: 1.5; }
+
+        /* --- FEATURED ROADMAPS --- */
+        .featured {
+            background: var(--white);
+            border-top: 1px solid rgba(44, 42, 38, 0.06);
+            border-bottom: 1px solid rgba(44, 42, 38, 0.06);
+        }
+        .featured .section-inner { text-align: center; }
+        .featured .section-title { max-width: 580px; margin: 0 auto 40px; }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .featured-card {
+            text-align: left;
+            border-radius: var(--radius-lg);
+            background: var(--cream);
+            border: 1px solid rgba(44, 42, 38, 0.05);
+            overflow: hidden;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .featured-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+        .featured-card-header {
+            padding: 20px 20px 14px;
+            display: flex; align-items: flex-start; justify-content: space-between;
+        }
+        .featured-card-emoji {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+        }
+        .featured-card:nth-child(1) .featured-card-emoji { background: rgba(212, 89, 59, 0.1); }
+        .featured-card:nth-child(2) .featured-card-emoji { background: rgba(233, 162, 59, 0.12); }
+        .featured-card:nth-child(3) .featured-card-emoji { background: rgba(28, 30, 46, 0.07); }
+
+        .featured-card-city {
+            font-size: 0.7rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+            color: var(--warm-gray);
+            background: var(--white);
+            padding: 4px 10px; border-radius: 100px;
+        }
+        .featured-card-body { padding: 0 20px 18px; }
+        .featured-card-body h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+            color: var(--navy);
+            margin-bottom: 5px;
+            letter-spacing: -0.3px;
+        }
+        .featured-card-body > p {
+            font-size: 0.82rem; color: var(--text-light);
+            line-height: 1.5; margin-bottom: 14px;
+        }
+        .featured-stops-list {
+            display: flex; flex-direction: column; gap: 0;
+        }
+        .featured-stop-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 7px 0;
+            font-size: 0.82rem; color: var(--text);
+            border-top: 1px solid rgba(44, 42, 38, 0.05);
+        }
+        .featured-stop-item:first-child { border-top: none; }
+        .featured-stop-num {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.6rem; font-weight: 700;
+            flex-shrink: 0;
+            color: var(--white);
+        }
+        .featured-card:nth-child(1) .featured-stop-num { background: var(--terracotta); }
+        .featured-card:nth-child(2) .featured-stop-num { background: var(--amber); }
+        .featured-card:nth-child(3) .featured-stop-num { background: var(--navy); }
+
+        .featured-card-footer {
+            padding: 12px 20px;
+            background: rgba(44, 42, 38, 0.02);
+            border-top: 1px solid rgba(44, 42, 38, 0.05);
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 0.78rem; color: var(--text-light);
+        }
+        .featured-card-people {
+            display: flex; align-items: center; gap: 6px;
+        }
+        .featured-card-people-dots {
+            display: flex;
+        }
+        .featured-card-people-dots span {
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--cream);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.58rem; font-weight: 600;
+            margin-left: -6px;
+        }
+        .featured-card-people-dots span:first-child { margin-left: 0; }
+        .featured-card-date {
+            font-weight: 500; color: var(--warm-gray);
+        }
+
+        .featured-card:nth-child(1) .featured-card-people-dots span { background: var(--terracotta-light); color: var(--white); }
+        .featured-card:nth-child(2) .featured-card-people-dots span { background: var(--amber-light); color: var(--text); }
+        .featured-card:nth-child(3) .featured-card-people-dots span { background: var(--navy-mid); color: var(--white); }
+
+        .featured-cta-row {
+            margin-top: 36px;
+        }
+        .featured-cta-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-weight: 600; font-size: 0.95rem;
+            color: var(--terracotta);
+            cursor: pointer;
+            background: none; border: none;
+            font-family: 'DM Sans', sans-serif;
+            transition: gap 0.25s ease;
+            -webkit-tap-highlight-color: transparent;
+            padding: 8px 0;
+        }
+        .featured-cta-link:hover { gap: 12px; }
+
+        /* --- BOTTOM CTA --- */
+        .bottom-cta {
+            text-align: center;
+            padding: 64px 20px 80px;
+        }
+        .bottom-cta .section-title { margin-bottom: 10px; }
+        .bottom-cta p {
+            color: var(--text-light); font-size: 1rem;
+            max-width: 420px; margin: 0 auto 32px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            padding-bottom: calc(28px + var(--safe-bottom));
+            border-top: 1px solid rgba(44, 42, 38, 0.08);
+            font-size: 0.8rem;
+            color: var(--warm-gray);
+        }
+
+        /* ========== FLOW OVERLAY ========== */
+        .flow-overlay {
+            position: fixed; inset: 0; z-index: 1000;
+            display: none; align-items: center; justify-content: center;
+            background: rgba(28, 30, 46, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .flow-overlay.active { display: flex; }
+        .flow-overlay.visible { opacity: 1; }
+
+        .flow-panel {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            width: 100%; max-width: 520px;
+            max-height: 90vh; max-height: 90dvh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .flow-overlay.visible .flow-panel {
+            transform: translateY(0) scale(1);
+        }
+
+        .flow-close {
+            position: sticky; top: 0; float: right;
+            margin: 14px 14px 0 0;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: var(--cream);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; color: var(--text-light);
+            transition: all 0.2s ease;
+            z-index: 2;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .flow-close:hover { background: var(--cream-dark); color: var(--text); }
+
+        .flow-progress {
+            padding: 0 24px;
+            display: flex; gap: 5px;
+            clear: both;
+        }
+        .flow-progress-bar {
+            flex: 1; height: 3px;
+            background: var(--cream-dark);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .flow-progress-bar.filled { background: var(--terracotta); }
+        .flow-progress-bar.active {
+            background: linear-gradient(90deg, var(--terracotta) 50%, var(--cream-dark) 50%);
+            background-size: 200% 100%;
+            animation: progressFill 0.5s ease forwards;
+        }
+
+        .flow-body { padding: 24px 24px 28px; }
+
+        /* Flow step animations */
+        .flow-step {
+            display: none;
+            animation: stepIn 0.4s ease both;
+        }
+        .flow-step.active { display: block; }
+
+        .flow-step h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.6rem;
+            color: var(--navy);
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+        .flow-step .flow-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        /* Role selection */
+        .role-cards { display: flex; flex-direction: column; gap: 12px; }
+        .role-card {
+            display: flex; align-items: center; gap: 14px;
+            padding: 18px;
+            border: 2px solid var(--cream-dark);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: var(--white);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .role-card:hover, .role-card:active {
+            border-color: var(--terracotta);
+            background: rgba(212, 89, 59, 0.03);
+        }
+        .role-card-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+        }
+        .role-card:first-child .role-card-icon { background: rgba(212, 89, 59, 0.1); }
+        .role-card:last-child .role-card-icon { background: rgba(233, 162, 59, 0.15); }
+        .role-card h3 { font-weight: 600; font-size: 0.95rem; color: var(--navy); margin-bottom: 2px; }
+        .role-card p { font-size: 0.8rem; color: var(--text-light); line-height: 1.4; }
+        .role-card-arrow {
+            margin-left: auto;
+            color: var(--cream-dark);
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+        }
+        .role-card:hover .role-card-arrow { color: var(--terracotta); transform: translateX(3px); }
+
+        /* Creator: city select */
+        .city-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .city-btn {
+            padding: 16px 14px;
+            border: 2px solid var(--cream-dark);
+            border-radius: var(--radius);
+            background: var(--white);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.25s ease;
+            font-family: 'DM Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .city-btn:hover, .city-btn:active { border-color: var(--terracotta); background: rgba(212, 89, 59, 0.03); }
+        .city-btn.selected { border-color: var(--terracotta); background: rgba(212, 89, 59, 0.06); }
+        .city-btn span { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        .city-btn strong { font-size: 0.92rem; font-weight: 600; color: var(--navy); }
+
+        /* Creator: add stops */
+        .stop-form { display: flex; flex-direction: column; gap: 12px; }
+        .stop-input-row {
+            display: flex; gap: 10px;
+        }
+        .stop-input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 2px solid var(--cream-dark);
+            border-radius: var(--radius);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px; /* Prevents iOS zoom */
+            background: var(--white);
+            color: var(--text);
+            transition: border-color 0.2s ease;
+            outline: none;
+            width: 100%;
+        }
+        .stop-input:focus { border-color: var(--terracotta); }
+        .stop-input::placeholder { color: var(--warm-gray); }
+
+        /* Validation hint */
+        .stop-hint {
+            font-size: 0.78rem;
+            color: var(--terracotta);
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+        .stop-hint.visible {
+            opacity: 1;
+            max-height: 30px;
+        }
+
+        .category-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+        .cat-pill {
+            padding: 10px 16px;
+            border: 1.5px solid var(--cream-dark);
+            border-radius: 100px;
+            font-size: 0.82rem; font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .cat-pill:hover { border-color: var(--terracotta); }
+        .cat-pill.selected {
+            background: var(--terracotta); color: var(--white);
+            border-color: var(--terracotta);
+        }
+
+        .stop-added {
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 14px;
+            background: var(--cream);
+            border-radius: var(--radius);
+            font-size: 0.86rem;
+            animation: stepIn 0.3s ease both;
+        }
+        .stop-added-cat {
+            font-size: 0.72rem; font-weight: 600;
+            color: var(--terracotta);
+            background: rgba(212, 89, 59, 0.1);
+            padding: 3px 10px; border-radius: 100px;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .add-stop-btn {
+            padding: 14px;
+            border: 2px dashed var(--cream-dark);
+            border-radius: var(--radius);
+            background: transparent;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .add-stop-btn:hover, .add-stop-btn:active { border-color: var(--terracotta); color: var(--terracotta); }
+
+        /* Creator preview */
+        .preview-card {
+            background: var(--cream);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(44, 42, 38, 0.06);
+        }
+        .preview-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+        .preview-header h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem; color: var(--navy);
+            min-width: 0;
+        }
+        .preview-city-badge {
+            font-size: 0.75rem; font-weight: 600;
+            background: var(--white);
+            padding: 5px 12px; border-radius: 100px;
+            color: var(--text-light);
+            white-space: nowrap; flex-shrink: 0;
+        }
+        .preview-stops { display: flex; flex-direction: column; gap: 0; }
+        .preview-stop {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(44, 42, 38, 0.06);
+        }
+        .preview-stop:last-child { border-bottom: none; }
+        .preview-stop-num {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: var(--terracotta);
+            color: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 600;
+            flex-shrink: 0;
+        }
+        .preview-stop-name {
+            font-weight: 500; font-size: 0.9rem; color: var(--navy);
+            min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+
+        /* Joiner: roadmap browse */
+        .roadmap-list { display: flex; flex-direction: column; gap: 10px; }
+        .roadmap-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 16px;
+            border: 2px solid var(--cream-dark);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: var(--white);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .roadmap-item:hover, .roadmap-item:active {
+            border-color: var(--amber);
+            background: rgba(233, 162, 59, 0.03);
+        }
+        .roadmap-emoji {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+            background: var(--cream);
+        }
+        .roadmap-info { flex: 1; min-width: 0; }
+        .roadmap-info h3 {
+            font-weight: 600; font-size: 0.9rem; color: var(--navy); margin-bottom: 2px;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .roadmap-meta {
+            font-size: 0.75rem; color: var(--text-light);
+            display: flex; flex-wrap: wrap; gap: 4px 10px;
+        }
+        .roadmap-meta span { display: flex; align-items: center; gap: 3px; white-space: nowrap; }
+
+        /* Joiner detail */
+        .join-detail {
+            background: var(--cream);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .join-detail-header {
+            padding: 20px 20px 14px;
+            border-bottom: 1px solid rgba(44, 42, 38, 0.06);
+        }
+        .join-detail-header h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.25rem; color: var(--navy); margin-bottom: 4px;
+        }
+        .join-detail-meta {
+            font-size: 0.8rem; color: var(--text-light);
+            display: flex; flex-wrap: wrap; gap: 4px 12px;
+        }
+        .join-detail-stops { padding: 14px 20px 20px; }
+        .join-stop {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 0;
+        }
+        .join-stop-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--amber);
+            flex-shrink: 0;
+        }
+        .join-stop-dot.alt { background: var(--terracotta); }
+
+        .join-people {
+            display: flex; align-items: center; gap: 8px;
+            padding: 14px 20px;
+            background: rgba(233, 162, 59, 0.08);
+            font-size: 0.82rem; color: var(--text-light);
+        }
+        .join-people strong { color: var(--navy); }
+
+        /* Lead capture */
+        .lead-form { display: flex; flex-direction: column; gap: 12px; }
+        .lead-input {
+            padding: 16px 16px;
+            border: 2px solid var(--cream-dark);
+            border-radius: var(--radius);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px; /* Prevents iOS zoom */
+            background: var(--white);
+            color: var(--text);
+            transition: border-color 0.2s ease;
+            outline: none;
+            width: 100%;
+        }
+        .lead-input:focus { border-color: var(--terracotta); }
+
+        .lead-toggle {
+            display: flex; background: var(--cream);
+            border-radius: var(--radius); overflow: hidden;
+        }
+        .lead-toggle-btn {
+            flex: 1; padding: 12px;
+            border: none; background: transparent;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem; font-weight: 500;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .lead-toggle-btn.active {
+            background: var(--white);
+            color: var(--navy);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            border-radius: var(--radius);
+        }
+
+        /* Flow buttons */
+        .flow-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem; font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .flow-btn-primary {
+            background: var(--terracotta);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(212, 89, 59, 0.25);
+        }
+        .flow-btn-primary:hover {
+            background: var(--terracotta-light);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(212, 89, 59, 0.3);
+        }
+        .flow-btn-primary:active { transform: translateY(0); }
+        .flow-btn-secondary {
+            background: var(--cream);
+            color: var(--text);
+            margin-top: 8px;
+        }
+        .flow-btn-secondary:hover { background: var(--cream-dark); }
+        .flow-btn:disabled {
+            opacity: 0.4; cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Success */
+        .success-anim {
+            width: 68px; height: 68px;
+            border-radius: 50%;
+            background: rgba(212, 89, 59, 0.1);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 1.8rem;
+            animation: successPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        @keyframes stepIn {
+            from { opacity: 0; transform: translateX(14px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes progressFill {
+            to { background-position: 0% 0%; }
+        }
+        @keyframes successPop {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- RESPONSIVE --- */
+
+        /* Tablet */
+        @media (max-width: 900px) {
+            .featured-grid { grid-template-columns: repeat(2, 1fr); }
+            .featured-grid .featured-card:nth-child(3) {
+                grid-column: 1 / -1;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            section { padding: 60px 16px; }
+
+            .value-grid { grid-template-columns: 1fr; gap: 14px; }
+            .value-card { padding: 24px 20px; }
+
+            .steps { flex-direction: column; align-items: center; gap: 28px; }
+            .steps::before { display: none; }
+            .step { max-width: 100%; }
+
+            .featured-grid { grid-template-columns: 1fr; }
+            .featured-grid .featured-card:nth-child(3) {
+                max-width: none;
+            }
+
+            .bottom-cta { padding: 48px 16px 64px; }
+
+            /* Flow: full-width bottom sheet on mobile */
+            .flow-overlay {
+                padding: 0;
+                align-items: flex-end;
+            }
+            .flow-panel {
+                max-width: 100%;
+                max-height: 95vh; max-height: 95dvh;
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+                padding-bottom: var(--safe-bottom);
+            }
+            .flow-body { padding: 20px 18px 24px; }
+            .flow-progress { padding: 0 18px; }
+        }
+
+        /* Small mobile */
+        @media (max-width: 400px) {
+            nav { padding: 12px 14px; }
+            .nav-logo { font-size: 1.35rem; }
+            .nav-cta { padding: 8px 16px; font-size: 0.82rem; }
+
+            .hero { padding: 90px 16px 48px; }
+            .hero h1 { letter-spacing: -1px; }
+            .hero-cta-main, .hero-cta-secondary { padding: 16px 28px; font-size: 0.95rem; }
+
+            section { padding: 48px 14px; }
+
+            .city-grid { gap: 8px; }
+            .city-btn { padding: 14px 12px; }
+
+            .featured-card-body { padding: 0 16px 14px; }
+            .featured-card-header { padding: 16px 16px 12px; }
+            .featured-card-footer { padding: 10px 16px; }
+        }
+
+        /* Prefers reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="#" class="nav-logo"><img src="Baiddy_logo.webp" alt="Baiddy" class="nav-logo-img"></a>
+    <button class="nav-cta" onclick="openFlow('nav_cta')">Entra nella beta</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Early access — posti limitati
+    </div>
+    <h1>La città diventa più bella <em>insieme</em></h1>
+    <p class="hero-sub">Crea roadmap urbane, unisciti a esperienze condivise e conosci nuove persone. Non un evento. Un'intera giornata da vivere.</p>
+    <button class="hero-cta-main" onclick="openFlow('hero_cta')">
+        Prova una roadmap
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </button>
+    <div class="hero-proof">
+        <div class="hero-avatars">
+            <span>M</span><span>L</span><span>A</span><span>+</span>
+        </div>
+        Già 240+ persone in lista d'attesa
+    </div>
+</section>
+
+<!-- VALUE PROP -->
+<section class="value">
+    <div class="section-inner reveal">
+        <p class="section-label">Perché Baiddy</p>
+        <h2 class="section-title">Non un altro evento.<br>Un modo nuovo di vivere la città</h2>
+        <div class="value-grid">
+            <div class="value-card">
+                <div class="value-icon">&#x1f5fa;&#xfe0f;</div>
+                <h3>Crea la tua roadmap</h3>
+                <p>Componi una giornata con le tue tappe preferite: caffè, musei, aperitivi, street food. La tua città, la tua visione.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">&#x1f91d;</div>
+                <h3>Unisciti a quelle degli altri</h3>
+                <p>Sfoglia le roadmap create dalla community e partecipa a quelle che ti ispirano. Ogni esperienza è un'avventura condivisa.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">&#x2728;</div>
+                <h3>Conosci persone nuove</h3>
+                <p>Non un match. Non un like. Un'intera giornata passata insieme, con momenti veri e connessioni autentiche.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+    <div class="section-inner reveal">
+        <p class="section-label">Come funziona</p>
+        <h2 class="section-title">Tre passi e sei fuori</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Scegli o crea</h3>
+                <p>Crea una roadmap con le tue tappe preferite oppure sfoglia quelle pubblicate da altri.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Incontra il gruppo</h3>
+                <p>Al giorno stabilito ti ritrovi con le persone iscritte. Volti nuovi, stessa voglia di esplorare.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Vivi la giornata</h3>
+                <p>Segui le tappe, scopri posti nuovi e lasciati sorprendere dalla serendipità della città.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURED ROADMAPS -->
+<section class="featured">
+    <div class="section-inner reveal">
+        <p class="section-label">In evidenza</p>
+        <h2 class="section-title">Roadmap che stanno prendendo vita</h2>
+        <div class="featured-grid">
+
+            <!-- Roadmap 1 -->
+            <div class="featured-card" onclick="openFlow('featured_card')">
+                <div class="featured-card-header">
+                    <div class="featured-card-emoji">&#x1f355;</div>
+                    <span class="featured-card-city">Roma</span>
+                </div>
+                <div class="featured-card-body">
+                    <h3>Sapori di Trastevere</h3>
+                    <p>Un pomeriggio tra supplì, forni storici e tramonti sul Tevere. Creata da Marco R.</p>
+                    <div class="featured-stops-list">
+                        <div class="featured-stop-item"><span class="featured-stop-num">1</span> Supplizio — street food</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">2</span> Forno Roscioni</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">3</span> Bar San Calisto</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">4</span> Ponte Sisto al tramonto</div>
+                    </div>
+                </div>
+                <div class="featured-card-footer">
+                    <div class="featured-card-people">
+                        <div class="featured-card-people-dots">
+                            <span>M</span><span>A</span><span>+2</span>
+                        </div>
+                        4 iscritti
+                    </div>
+                    <span class="featured-card-date">Sab 15 Mar</span>
+                </div>
+            </div>
+
+            <!-- Roadmap 2 -->
+            <div class="featured-card" onclick="openFlow('featured_card')">
+                <div class="featured-card-header">
+                    <div class="featured-card-emoji">&#x1f3d7;&#xfe0f;</div>
+                    <span class="featured-card-city">Milano</span>
+                </div>
+                <div class="featured-card-body">
+                    <h3>Milano nascosta</h3>
+                    <p>Cortili segreti, arte contemporanea e jazz. Una Milano che non ti aspetti. Di Sofia L.</p>
+                    <div class="featured-stops-list">
+                        <div class="featured-stop-item"><span class="featured-stop-num">1</span> Cortili segreti di Brera</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">2</span> Fondazione Prada</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">3</span> Navigli al tramonto</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">4</span> Jazz al Blue Note</div>
+                    </div>
+                </div>
+                <div class="featured-card-footer">
+                    <div class="featured-card-people">
+                        <div class="featured-card-people-dots">
+                            <span>S</span><span>L</span><span>+1</span>
+                        </div>
+                        3 iscritti
+                    </div>
+                    <span class="featured-card-date">Dom 16 Mar</span>
+                </div>
+            </div>
+
+            <!-- Roadmap 3 -->
+            <div class="featured-card" onclick="openFlow('featured_card')">
+                <div class="featured-card-header">
+                    <div class="featured-card-emoji">&#x1f3a8;</div>
+                    <span class="featured-card-city">Napoli</span>
+                </div>
+                <div class="featured-card-body">
+                    <h3>Street art & caffè</h3>
+                    <p>Murales, caffè storico e aperitivo sul mare. L'anima di Napoli in un giorno. Di Luca G.</p>
+                    <div class="featured-stops-list">
+                        <div class="featured-stop-item"><span class="featured-stop-num">1</span> Murales Quartieri Spagnoli</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">2</span> Caffè Gambrinus</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">3</span> Spaccanapoli walk</div>
+                        <div class="featured-stop-item"><span class="featured-stop-num">4</span> Aperitivo sul Lungomare</div>
+                    </div>
+                </div>
+                <div class="featured-card-footer">
+                    <div class="featured-card-people">
+                        <div class="featured-card-people-dots">
+                            <span>L</span><span>G</span><span>+3</span>
+                        </div>
+                        5 iscritti
+                    </div>
+                    <span class="featured-card-date">Sab 15 Mar</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="featured-cta-row">
+            <button class="featured-cta-link" onclick="openFlow('featured_section')">
+                Esplora tutte le roadmap
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+    <div class="section-inner reveal">
+        <h2 class="section-title serif">Pronto a esplorare?</h2>
+        <p>Prova la micro-esperienza e scopri cosa potrebbe diventare la tua prossima giornata in città.</p>
+        <button class="hero-cta-secondary" onclick="openFlow('bottom_cta')">
+            Prova una roadmap
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    &copy; 2026 Baiddy &middot; Vivi la città insieme
+</footer>
+
+<!-- ========== FLOW OVERLAY ========== -->
+<div class="flow-overlay" id="flowOverlay">
+    <div class="flow-panel" id="flowPanel">
+        <button class="flow-close" onclick="closeFlow()" aria-label="Chiudi">&times;</button>
+        <div class="flow-progress" id="flowProgress"></div>
+        <div class="flow-body">
+
+            <!-- STEP: Role Select -->
+            <div class="flow-step" id="stepRole">
+                <h2>Come vuoi iniziare?</h2>
+                <p class="flow-desc">Scegli il tuo ruolo per provare l'esperienza Baiddy.</p>
+                <div class="role-cards">
+                    <div class="role-card" onclick="selectRole('creator')">
+                        <div class="role-card-icon">&#x1f3a8;</div>
+                        <div>
+                            <h3>Creator</h3>
+                            <p>Crea e pubblica la tua roadmap urbana</p>
+                        </div>
+                        <svg class="role-card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                    <div class="role-card" onclick="selectRole('joiner')">
+                        <div class="role-card-icon">&#x1f30d;</div>
+                        <div>
+                            <h3>Joiner</h3>
+                            <p>Esplora e partecipa a una roadmap esistente</p>
+                        </div>
+                        <svg class="role-card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CREATOR STEP 1: City -->
+            <div class="flow-step" id="stepCreatorCity">
+                <h2>In quale città?</h2>
+                <p class="flow-desc">Scegli dove ambientare la tua roadmap.</p>
+                <div class="city-grid">
+                    <button class="city-btn" onclick="selectCity(this, 'Milano')">
+                        <span>&#x1f3d9;&#xfe0f;</span>
+                        <strong>Milano</strong>
+                    </button>
+                    <button class="city-btn" onclick="selectCity(this, 'Roma')">
+                        <span>&#x1f3db;&#xfe0f;</span>
+                        <strong>Roma</strong>
+                    </button>
+                    <button class="city-btn" onclick="selectCity(this, 'Napoli')">
+                        <span>&#x1f30b;</span>
+                        <strong>Napoli</strong>
+                    </button>
+                    <button class="city-btn" onclick="selectCity(this, 'Firenze')">
+                        <span>&#x1f3a8;</span>
+                        <strong>Firenze</strong>
+                    </button>
+                </div>
+                <button class="flow-btn flow-btn-primary" style="margin-top:18px" id="btnCityNext" disabled onclick="goCreatorStops()">Avanti</button>
+            </div>
+
+            <!-- CREATOR STEP 2: Stops -->
+            <div class="flow-step" id="stepCreatorStops">
+                <h2>Aggiungi le tappe</h2>
+                <p class="flow-desc">Dai un nome e una categoria ad ogni tappa (min. 2).</p>
+                <div class="stop-form" id="stopForm">
+                    <div id="addedStops"></div>
+                    <input class="stop-input" type="text" id="stopNameInput" placeholder="Nome della tappa (es. Caffè Napoli)" maxlength="60">
+                    <div class="category-pills" id="catPills">
+                        <button class="cat-pill" onclick="selectCat(this, 'Food')">&#x1f354; Food</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Cultura')">&#x1f3ad; Cultura</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Nightlife')">&#x1f378; Nightlife</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Shopping')">&#x1f6cd;&#xfe0f; Shopping</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Natura')">&#x1f343; Natura</button>
+                    </div>
+                    <div class="stop-hint" id="stopHint">Scrivi un nome e seleziona una categoria</div>
+                    <button class="add-stop-btn" id="addStopBtn" onclick="addStop()">+ Aggiungi tappa</button>
+                </div>
+                <button class="flow-btn flow-btn-primary" style="margin-top:18px" id="btnStopsNext" disabled onclick="goCreatorPreview()">Vedi anteprima</button>
+            </div>
+
+            <!-- CREATOR STEP 3: Preview -->
+            <div class="flow-step" id="stepCreatorPreview">
+                <h2>La tua roadmap</h2>
+                <p class="flow-desc">Ecco come apparirà su Baiddy. Bella, vero?</p>
+                <div class="preview-card" id="previewCard"></div>
+                <button class="flow-btn flow-btn-primary" style="margin-top:18px" onclick="goLead()">Pubblica su Baiddy</button>
+            </div>
+
+            <!-- JOINER STEP 1: Browse -->
+            <div class="flow-step" id="stepJoinerBrowse">
+                <h2>Esplora le roadmap</h2>
+                <p class="flow-desc">Ecco cosa sta succedendo nella tua città questo weekend.</p>
+                <div class="roadmap-list" id="roadmapList"></div>
+            </div>
+
+            <!-- JOINER STEP 2: Detail -->
+            <div class="flow-step" id="stepJoinerDetail">
+                <div class="join-detail" id="joinDetail"></div>
+                <button class="flow-btn flow-btn-primary" style="margin-top:18px" onclick="goLead()">Unisciti a questa roadmap</button>
+                <button class="flow-btn flow-btn-secondary" onclick="goJoinerBrowse()">Torna all'elenco</button>
+            </div>
+
+            <!-- LEAD CAPTURE -->
+            <div class="flow-step" id="stepLead">
+                <h2>Ci siamo quasi!</h2>
+                <p class="flow-desc">Baiddy è in fase di lancio. Lascia il tuo contatto per essere tra i primi a provarla.</p>
+                <div class="lead-form">
+                    <div class="lead-toggle">
+                        <button class="lead-toggle-btn active" onclick="toggleLead('email', this)">Email</button>
+                        <button class="lead-toggle-btn" onclick="toggleLead('whatsapp', this)">WhatsApp</button>
+                    </div>
+                    <input class="lead-input" id="leadInput" type="email" placeholder="La tua email">
+                    <button class="flow-btn flow-btn-primary" id="btnLeadSubmit" onclick="submitLead()">Entra nella beta</button>
+                </div>
+            </div>
+
+            <!-- SUCCESS -->
+            <div class="flow-step" id="stepSuccess">
+                <div style="text-align:center">
+                    <div class="success-anim">&#x1f389;</div>
+                    <h2 style="margin-bottom:8px">Sei dentro!</h2>
+                    <p class="flow-desc" style="margin-bottom:0">Ti contatteremo appena Baiddy sarà disponibile nella tua città. Preparati a esplorare.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ========== STATE ==========
+    let currentRole = null;
+    let currentStep = null;
+    let creatorCity = null;
+    let creatorStops = [];
+    let selectedCat = null;
+    let leadType = 'email';
+    let selectedRoadmap = null;
+    let flowSource = '';
+
+    // Fake roadmap data (using text emojis for JS rendering)
+    const fakeRoadmaps = [
+        {
+            id: 1, title: 'Sapori di Trastevere', city: 'Roma', emoji: '\u{1F355}',
+            author: 'Marco R.', people: 4, stops: ['Supplizio', 'Forno Roscioni', 'Bar San Calisto', 'Ponte Sisto al tramonto'],
+            date: 'Sabato 15 Mar', tags: ['Food', 'Nightlife']
+        },
+        {
+            id: 2, title: 'Milano nascosta', city: 'Milano', emoji: '\u{1F3D7}\uFE0F',
+            author: 'Sofia L.', people: 3, stops: ['Cortili segreti di Brera', 'Fondazione Prada', 'Navigli al tramonto', 'Jazz al Blue Note'],
+            date: 'Domenica 16 Mar', tags: ['Cultura', 'Nightlife']
+        },
+        {
+            id: 3, title: 'Street art & caffè', city: 'Napoli', emoji: '\u{1F3A8}',
+            author: 'Luca G.', people: 5, stops: ['Murales dei Quartieri Spagnoli', 'Caffè Gambrinus', 'Spaccanapoli walk', 'Aperitivo sul Lungomare'],
+            date: 'Sabato 15 Mar', tags: ['Cultura', 'Food']
+        },
+        {
+            id: 4, title: 'Firenze slow', city: 'Firenze', emoji: '\u{1F33B}',
+            author: 'Giulia D.', people: 2, stops: ['Giardino delle Rose', 'San Lorenzo Market', 'Oltrarno artigianale'],
+            date: 'Domenica 16 Mar', tags: ['Natura', 'Shopping']
+        }
+    ];
+
+    // ========== GA4 TRACKING ==========
+    function track(eventName, params = {}) {
+        params.timestamp = new Date().toISOString();
+        console.log('[GA4]', eventName, params);
+        if (typeof gtag === 'function') {
+            gtag('event', eventName, params);
+        }
+    }
+
+    // ========== FLOW CONTROL ==========
+    function openFlow(source) {
+        flowSource = source;
+        const overlay = document.getElementById('flowOverlay');
+        overlay.classList.add('active');
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => overlay.classList.add('visible'));
+        });
+        document.body.style.overflow = 'hidden';
+
+        // Full reset
+        currentRole = null;
+        creatorCity = null;
+        creatorStops = [];
+        selectedCat = null;
+        selectedRoadmap = null;
+
+        // Reset creator stops UI (fix: inline styles from previous session)
+        const addStopBtn = document.getElementById('addStopBtn');
+        const stopNameInput = document.getElementById('stopNameInput');
+        const catPills = document.getElementById('catPills');
+        if (addStopBtn) addStopBtn.style.display = '';
+        if (stopNameInput) { stopNameInput.style.display = ''; stopNameInput.value = ''; }
+        if (catPills) catPills.style.display = '';
+        document.getElementById('addedStops').innerHTML = '';
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('selected'));
+        document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('selected'));
+        document.getElementById('btnCityNext').disabled = true;
+        document.getElementById('btnStopsNext').disabled = true;
+        document.getElementById('stopHint').classList.remove('visible');
+
+        showStep('stepRole');
+        track('flow_open', { source: source });
+    }
+
+    function closeFlow() {
+        const overlay = document.getElementById('flowOverlay');
+        overlay.classList.remove('visible');
+        setTimeout(() => {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }, 350);
+        track('flow_close', { step: currentStep, role: currentRole, source: flowSource });
+    }
+
+    // Close on backdrop click
+    document.getElementById('flowOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeFlow();
+    });
+
+    function showStep(stepId) {
+        document.querySelectorAll('.flow-step').forEach(s => s.classList.remove('active'));
+        const step = document.getElementById(stepId);
+        if (step) {
+            step.classList.remove('active');
+            void step.offsetWidth;
+            step.classList.add('active');
+        }
+        currentStep = stepId;
+        updateProgress();
+        // Scroll panel to top when switching steps
+        document.getElementById('flowPanel').scrollTop = 0;
+    }
+
+    function updateProgress() {
+        const progressEl = document.getElementById('flowProgress');
+        let totalSteps = 0, currentIdx = 0;
+
+        if (currentRole === 'creator') {
+            totalSteps = 5;
+            const map = { stepRole: 0, stepCreatorCity: 1, stepCreatorStops: 2, stepCreatorPreview: 3, stepLead: 4, stepSuccess: 5 };
+            currentIdx = map[currentStep] ?? 0;
+        } else if (currentRole === 'joiner') {
+            totalSteps = 4;
+            const map = { stepRole: 0, stepJoinerBrowse: 1, stepJoinerDetail: 2, stepLead: 3, stepSuccess: 4 };
+            currentIdx = map[currentStep] ?? 0;
+        } else {
+            totalSteps = 1;
+            currentIdx = 0;
+        }
+
+        let html = '';
+        for (let i = 0; i < totalSteps; i++) {
+            if (i < currentIdx) html += '<div class="flow-progress-bar filled"></div>';
+            else if (i === currentIdx) html += '<div class="flow-progress-bar active"></div>';
+            else html += '<div class="flow-progress-bar"></div>';
+        }
+        progressEl.innerHTML = html;
+    }
+
+    // ========== ROLE SELECT ==========
+    function selectRole(role) {
+        currentRole = role;
+        track('role_selected', { role: role, source: flowSource });
+
+        if (role === 'creator') {
+            showStep('stepCreatorCity');
+        } else {
+            goJoinerBrowse();
+        }
+    }
+
+    // ========== CREATOR FLOW ==========
+    function selectCity(btn, city) {
+        document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        creatorCity = city;
+        document.getElementById('btnCityNext').disabled = false;
+        track('creator_city_selected', { city: city });
+    }
+
+    function goCreatorStops() {
+        creatorStops = [];
+        document.getElementById('addedStops').innerHTML = '';
+        document.getElementById('stopNameInput').value = '';
+        document.getElementById('stopNameInput').style.display = '';
+        document.getElementById('addStopBtn').style.display = '';
+        document.getElementById('catPills').style.display = '';
+        document.getElementById('stopHint').classList.remove('visible');
+        selectedCat = null;
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('selected'));
+        document.getElementById('btnStopsNext').disabled = true;
+        showStep('stepCreatorStops');
+        track('creator_step_stops', { city: creatorCity });
+    }
+
+    function selectCat(pill, cat) {
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        selectedCat = cat;
+        document.getElementById('stopHint').classList.remove('visible');
+    }
+
+    function addStop() {
+        const nameInput = document.getElementById('stopNameInput');
+        const name = nameInput.value.trim();
+        const hint = document.getElementById('stopHint');
+
+        // Show feedback if missing fields
+        if (!name && !selectedCat) {
+            hint.textContent = 'Scrivi un nome e seleziona una categoria';
+            hint.classList.add('visible');
+            nameInput.focus();
+            return;
+        }
+        if (!name) {
+            hint.textContent = 'Scrivi il nome della tappa';
+            hint.classList.add('visible');
+            nameInput.focus();
+            return;
+        }
+        if (!selectedCat) {
+            hint.textContent = 'Seleziona una categoria';
+            hint.classList.add('visible');
+            return;
+        }
+
+        hint.classList.remove('visible');
+        if (creatorStops.length >= 5) return;
+
+        creatorStops.push({ name, category: selectedCat });
+        track('creator_stop_added', { stop_name: name, category: selectedCat, stop_count: creatorStops.length });
+
+        const container = document.getElementById('addedStops');
+        const el = document.createElement('div');
+        el.className = 'stop-added';
+        el.innerHTML = `<strong>${creatorStops.length}.</strong> ${escapeHtml(name)} <span class="stop-added-cat">${escapeHtml(selectedCat)}</span>`;
+        container.appendChild(el);
+
+        nameInput.value = '';
+        selectedCat = null;
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('selected'));
+        nameInput.focus();
+
+        document.getElementById('btnStopsNext').disabled = creatorStops.length < 2;
+        if (creatorStops.length >= 5) {
+            document.getElementById('addStopBtn').style.display = 'none';
+            document.getElementById('stopNameInput').style.display = 'none';
+            document.getElementById('catPills').style.display = 'none';
+        }
+    }
+
+    // XSS protection for user-entered text
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function goCreatorPreview() {
+        track('creator_step_preview', { city: creatorCity, stop_count: creatorStops.length });
+
+        const card = document.getElementById('previewCard');
+        let stopsHtml = creatorStops.map((s, i) =>
+            `<div class="preview-stop">
+                <div class="preview-stop-num">${i + 1}</div>
+                <span class="preview-stop-name">${escapeHtml(s.name)}</span>
+                <span class="stop-added-cat">${escapeHtml(s.category)}</span>
+            </div>`
+        ).join('');
+
+        card.innerHTML = `
+            <div class="preview-header">
+                <h3>La tua giornata a ${escapeHtml(creatorCity)}</h3>
+                <span class="preview-city-badge">${escapeHtml(creatorCity)}</span>
+            </div>
+            <div class="preview-stops">${stopsHtml}</div>
+        `;
+        showStep('stepCreatorPreview');
+    }
+
+    // ========== JOINER FLOW ==========
+    function goJoinerBrowse() {
+        const list = document.getElementById('roadmapList');
+        list.innerHTML = fakeRoadmaps.map(r => `
+            <div class="roadmap-item" onclick="selectRoadmap(${r.id})">
+                <div class="roadmap-emoji">${r.emoji}</div>
+                <div class="roadmap-info">
+                    <h3>${r.title}</h3>
+                    <div class="roadmap-meta">
+                        <span>${r.city}</span>
+                        <span>${r.date}</span>
+                        <span>${r.people} iscritti</span>
+                    </div>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;color:var(--cream-dark)"><path d="m9 18 6-6-6-6"/></svg>
+            </div>
+        `).join('');
+        showStep('stepJoinerBrowse');
+        track('joiner_step_browse');
+    }
+
+    function selectRoadmap(id) {
+        selectedRoadmap = fakeRoadmaps.find(r => r.id === id);
+        if (!selectedRoadmap) return;
+
+        track('joiner_roadmap_selected', { roadmap_id: id, roadmap_title: selectedRoadmap.title });
+
+        const detail = document.getElementById('joinDetail');
+        const stopsHtml = selectedRoadmap.stops.map((s, i) =>
+            `<div class="join-stop">
+                <div class="join-stop-dot ${i % 2 ? 'alt' : ''}"></div>
+                <span>${s}</span>
+            </div>`
+        ).join('');
+
+        detail.innerHTML = `
+            <div class="join-detail-header">
+                <h3>${selectedRoadmap.emoji} ${selectedRoadmap.title}</h3>
+                <div class="join-detail-meta">
+                    <span>di ${selectedRoadmap.author}</span>
+                    <span>${selectedRoadmap.date}</span>
+                    <span>${selectedRoadmap.city}</span>
+                </div>
+            </div>
+            <div class="join-detail-stops">${stopsHtml}</div>
+            <div class="join-people">
+                <strong>${selectedRoadmap.people} persone</strong>&nbsp;si sono già iscritte
+            </div>
+        `;
+        showStep('stepJoinerDetail');
+    }
+
+    // ========== LEAD CAPTURE ==========
+    function goLead() {
+        showStep('stepLead');
+        document.getElementById('leadInput').value = '';
+        leadType = 'email';
+        document.querySelectorAll('.lead-toggle-btn').forEach((b, i) => {
+            b.classList.toggle('active', i === 0);
+        });
+        updateLeadPlaceholder();
+        track('lead_step_reached', { role: currentRole, source: flowSource });
+    }
+
+    function toggleLead(type, btn) {
+        leadType = type;
+        document.querySelectorAll('.lead-toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateLeadPlaceholder();
+        document.getElementById('leadInput').value = '';
+        document.getElementById('leadInput').focus();
+        track('lead_toggle', { type: type });
+    }
+
+    function updateLeadPlaceholder() {
+        const input = document.getElementById('leadInput');
+        if (leadType === 'email') {
+            input.type = 'email';
+            input.placeholder = 'La tua email';
+            input.inputMode = 'email';
+        } else {
+            input.type = 'tel';
+            input.placeholder = 'Il tuo numero WhatsApp';
+            input.inputMode = 'tel';
+        }
+    }
+
+    function submitLead() {
+        const input = document.getElementById('leadInput');
+        const value = input.value.trim();
+
+        if (!value) {
+            input.style.borderColor = '#e74c3c';
+            setTimeout(() => input.style.borderColor = '', 1500);
+            input.focus();
+            return;
+        }
+
+        if (leadType === 'email' && !value.includes('@')) {
+            input.style.borderColor = '#e74c3c';
+            setTimeout(() => input.style.borderColor = '', 1500);
+            input.focus();
+            return;
+        }
+
+        track('lead_submitted', {
+            role: currentRole,
+            lead_type: leadType,
+            source: flowSource,
+            city: creatorCity || (selectedRoadmap ? selectedRoadmap.city : null),
+            stops_count: currentRole === 'creator' ? creatorStops.length : null,
+            roadmap_selected: selectedRoadmap ? selectedRoadmap.title : null
+        });
+
+        showStep('stepSuccess');
+        track('flow_completed', { role: currentRole, source: flowSource });
+
+        setTimeout(() => closeFlow(), 4000);
+    }
+
+    // ========== SCROLL REVEAL ==========
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ========== KEYBOARD ==========
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeFlow();
+        if (e.key === 'Enter' && currentStep === 'stepCreatorStops') {
+            e.preventDefault();
+            addStop();
+        }
+    });
+</script>
+
+</body>
+</html>
