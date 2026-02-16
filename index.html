@@ -15,18 +15,18 @@
       gtag('config', 'G-XXXXXXXXXX');
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=aeonik@400,500,600,700&display=swap">
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --terracotta: #D4593B;
-            --terracotta-light: #E8765C;
-            --amber: #E9A23B;
-            --amber-light: #F2C56B;
+            --terracotta: #e459db;
+            --terracotta-light: #ec7ee5;
+            --amber: #b559e4;
+            --amber-light: #c97eed;
+            --accent: #dbe459;
             --navy: #1C1E2E;
             --navy-mid: #2A2D42;
             --cream: #FBF5EC;
@@ -46,7 +46,7 @@
         html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
         body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Aeonik', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--cream);
             color: var(--text);
             line-height: 1.6;
@@ -54,7 +54,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        .serif { font-family: 'Instrument Serif', Georgia, serif; }
+        .serif { font-family: 'Aeonik', sans-serif; }
 
         /* --- NAV --- */
         nav {
@@ -81,7 +81,7 @@
             color: var(--white);
             border: none; border-radius: 100px;
             padding: 10px 20px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 0.85rem; font-weight: 600;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -92,27 +92,49 @@
         /* --- HERO --- */
         .hero {
             min-height: 100vh; min-height: 100dvh;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center;
-            padding: 100px 20px 60px;
+            display: flex; flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            text-align: left;
+            padding: 100px 48px 60px;
             position: relative;
             overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .hero-image {
+            flex: 1;
+            max-width: 480px;
+        }
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-lg);
+            object-fit: cover;
+            max-height: 540px;
+            box-shadow: var(--shadow-lg);
         }
         .hero::before {
             content: '';
             position: absolute; inset: 0;
             background:
-                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(212, 89, 59, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(233, 162, 59, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(242, 197, 107, 0.06) 0%, transparent 50%);
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(228, 89, 219, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(181, 89, 228, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(219, 228, 89, 0.06) 0%, transparent 50%);
             pointer-events: none;
         }
 
         .hero-badge {
             display: inline-flex; align-items: center; gap: 8px;
             background: var(--white);
-            border: 1px solid rgba(212, 89, 59, 0.2);
+            border: 1px solid rgba(228, 89, 219, 0.2);
             border-radius: 100px;
             padding: 8px 16px 8px 12px;
             font-size: 0.8rem; font-weight: 500;
@@ -128,8 +150,8 @@
         }
 
         .hero h1 {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.4rem, 8vw, 5.5rem);
+            font-family: 'Aeonik', sans-serif;
+            font-size: clamp(1.68rem, 5.6vw, 3.85rem);
             line-height: 1.05;
             letter-spacing: -1.5px;
             color: var(--navy);
@@ -158,18 +180,18 @@
             color: var(--white);
             border: none; border-radius: 100px;
             padding: 18px 36px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 1.05rem; font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(212, 89, 59, 0.3);
+            box-shadow: 0 8px 32px rgba(228, 89, 219, 0.3);
             animation: fadeInUp 0.8s ease 0.45s both;
             -webkit-tap-highlight-color: transparent;
         }
         .hero-cta-main:hover {
             background: var(--terracotta-light);
             transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(212, 89, 59, 0.35);
+            box-shadow: 0 12px 40px rgba(228, 89, 219, 0.35);
         }
         .hero-cta-main:active { transform: translateY(0); }
         .hero-cta-main svg { transition: transform 0.3s ease; }
@@ -182,17 +204,17 @@
             color: var(--white);
             border: none; border-radius: 100px;
             padding: 18px 36px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 1.05rem; font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(212, 89, 59, 0.3);
+            box-shadow: 0 8px 32px rgba(228, 89, 219, 0.3);
             -webkit-tap-highlight-color: transparent;
         }
         .hero-cta-secondary:hover {
             background: var(--terracotta-light);
             transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(212, 89, 59, 0.35);
+            box-shadow: 0 12px 40px rgba(228, 89, 219, 0.35);
         }
         .hero-cta-secondary:active { transform: translateY(0); }
         .hero-cta-secondary svg { transition: transform 0.3s ease; }
@@ -203,7 +225,7 @@
             display: flex; align-items: center; gap: 10px;
             font-size: 0.82rem; color: var(--warm-gray);
             animation: fadeInUp 0.8s ease 0.6s both;
-            flex-wrap: wrap; justify-content: center;
+            flex-wrap: wrap; justify-content: flex-start;
         }
         .hero-avatars {
             display: flex;
@@ -235,7 +257,7 @@
             margin-bottom: 14px;
         }
         .section-title {
-            font-family: 'Instrument Serif', serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: clamp(1.8rem, 5vw, 3.2rem);
             line-height: 1.1;
             letter-spacing: -1px;
@@ -276,8 +298,8 @@
             font-size: 1.4rem;
             margin-bottom: 18px;
         }
-        .value-card:nth-child(1) .value-icon { background: rgba(212, 89, 59, 0.1); }
-        .value-card:nth-child(2) .value-icon { background: rgba(233, 162, 59, 0.15); }
+        .value-card:nth-child(1) .value-icon { background: rgba(228, 89, 219, 0.1); }
+        .value-card:nth-child(2) .value-icon { background: rgba(181, 89, 228, 0.15); }
         .value-card:nth-child(3) .value-icon { background: rgba(28, 30, 46, 0.08); }
 
         .value-card h3 {
@@ -314,7 +336,7 @@
             width: 52px; height: 52px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-family: 'Instrument Serif', serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 1.3rem;
             margin: 0 auto 20px;
             position: relative;
@@ -322,7 +344,7 @@
         }
         .step:nth-child(1) .step-num { background: var(--terracotta); color: var(--white); }
         .step:nth-child(2) .step-num { background: var(--amber); color: var(--white); }
-        .step:nth-child(3) .step-num { background: var(--navy); color: var(--white); }
+        .step:nth-child(3) .step-num { background: #dbe459; color: var(--navy); }
 
         .step h3 {
             font-weight: 600; font-size: 1.05rem;
@@ -368,9 +390,9 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 1.4rem;
         }
-        .featured-card:nth-child(1) .featured-card-emoji { background: rgba(212, 89, 59, 0.1); }
-        .featured-card:nth-child(2) .featured-card-emoji { background: rgba(233, 162, 59, 0.12); }
-        .featured-card:nth-child(3) .featured-card-emoji { background: rgba(28, 30, 46, 0.07); }
+        .featured-card:nth-child(1) .featured-card-emoji { background: rgba(228, 89, 219, 0.1); }
+        .featured-card:nth-child(2) .featured-card-emoji { background: rgba(181, 89, 228, 0.12); }
+        .featured-card:nth-child(3) .featured-card-emoji { background: rgba(219, 228, 89, 0.15); }
 
         .featured-card-city {
             font-size: 0.7rem; font-weight: 600;
@@ -381,7 +403,7 @@
         }
         .featured-card-body { padding: 0 20px 18px; }
         .featured-card-body h3 {
-            font-family: 'Instrument Serif', serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 1.2rem;
             color: var(--navy);
             margin-bottom: 5px;
@@ -411,7 +433,7 @@
         }
         .featured-card:nth-child(1) .featured-stop-num { background: var(--terracotta); }
         .featured-card:nth-child(2) .featured-stop-num { background: var(--amber); }
-        .featured-card:nth-child(3) .featured-stop-num { background: var(--navy); }
+        .featured-card:nth-child(3) .featured-stop-num { background: #dbe459; color: var(--navy); }
 
         .featured-card-footer {
             padding: 12px 20px;
@@ -441,7 +463,7 @@
 
         .featured-card:nth-child(1) .featured-card-people-dots span { background: var(--terracotta-light); color: var(--white); }
         .featured-card:nth-child(2) .featured-card-people-dots span { background: var(--amber-light); color: var(--text); }
-        .featured-card:nth-child(3) .featured-card-people-dots span { background: var(--navy-mid); color: var(--white); }
+        .featured-card:nth-child(3) .featured-card-people-dots span { background: #dbe459; color: var(--navy); }
 
         .featured-cta-row {
             margin-top: 36px;
@@ -452,7 +474,7 @@
             color: var(--terracotta);
             cursor: pointer;
             background: none; border: none;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             transition: gap 0.25s ease;
             -webkit-tap-highlight-color: transparent;
             padding: 8px 0;
@@ -554,7 +576,7 @@
         .flow-step.active { display: block; }
 
         .flow-step h2 {
-            font-family: 'Instrument Serif', serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 1.6rem;
             color: var(--navy);
             margin-bottom: 5px;
@@ -580,7 +602,7 @@
         }
         .role-card:hover, .role-card:active {
             border-color: var(--terracotta);
-            background: rgba(212, 89, 59, 0.03);
+            background: rgba(228, 89, 219, 0.03);
         }
         .role-card-icon {
             width: 44px; height: 44px;
@@ -588,8 +610,8 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 1.3rem; flex-shrink: 0;
         }
-        .role-card:first-child .role-card-icon { background: rgba(212, 89, 59, 0.1); }
-        .role-card:last-child .role-card-icon { background: rgba(233, 162, 59, 0.15); }
+        .role-card:first-child .role-card-icon { background: rgba(228, 89, 219, 0.1); }
+        .role-card:last-child .role-card-icon { background: rgba(181, 89, 228, 0.15); }
         .role-card h3 { font-weight: 600; font-size: 0.95rem; color: var(--navy); margin-bottom: 2px; }
         .role-card p { font-size: 0.8rem; color: var(--text-light); line-height: 1.4; }
         .role-card-arrow {
@@ -613,11 +635,11 @@
             cursor: pointer;
             text-align: left;
             transition: all 0.25s ease;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
-        .city-btn:hover, .city-btn:active { border-color: var(--terracotta); background: rgba(212, 89, 59, 0.03); }
-        .city-btn.selected { border-color: var(--terracotta); background: rgba(212, 89, 59, 0.06); }
+        .city-btn:hover, .city-btn:active { border-color: var(--terracotta); background: rgba(228, 89, 219, 0.03); }
+        .city-btn.selected { border-color: var(--terracotta); background: rgba(228, 89, 219, 0.06); }
         .city-btn span { font-size: 1.4rem; display: block; margin-bottom: 4px; }
         .city-btn strong { font-size: 0.92rem; font-weight: 600; color: var(--navy); }
 
@@ -631,7 +653,7 @@
             padding: 14px 16px;
             border: 2px solid var(--cream-dark);
             border-radius: var(--radius);
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 16px; /* Prevents iOS zoom */
             background: var(--white);
             color: var(--text);
@@ -665,7 +687,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             background: var(--white);
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             color: var(--text);
             -webkit-tap-highlight-color: transparent;
         }
@@ -683,12 +705,24 @@
             font-size: 0.86rem;
             animation: stepIn 0.3s ease both;
         }
+        .stop-remove {
+            width: 24px; height: 24px;
+            border: none; background: transparent;
+            cursor: pointer; color: var(--warm-gray);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            font-size: 1rem; line-height: 1;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-left: auto;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .stop-remove:hover { background: rgba(228, 89, 219, 0.1); color: var(--terracotta); }
         .stop-added-cat {
             font-size: 0.72rem; font-weight: 600;
             color: var(--terracotta);
-            background: rgba(212, 89, 59, 0.1);
+            background: rgba(228, 89, 219, 0.1);
             padding: 3px 10px; border-radius: 100px;
-            margin-left: auto;
             white-space: nowrap;
         }
 
@@ -698,7 +732,7 @@
             border-radius: var(--radius);
             background: transparent;
             cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 0.88rem;
             color: var(--text-light);
             transition: all 0.2s ease;
@@ -719,7 +753,7 @@
             gap: 12px;
         }
         .preview-header h3 {
-            font-family: 'Instrument Serif', serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 1.2rem; color: var(--navy);
             min-width: 0;
         }
@@ -765,7 +799,7 @@
         }
         .roadmap-item:hover, .roadmap-item:active {
             border-color: var(--amber);
-            background: rgba(233, 162, 59, 0.03);
+            background: rgba(181, 89, 228, 0.03);
         }
         .roadmap-emoji {
             width: 40px; height: 40px;
@@ -796,7 +830,7 @@
             border-bottom: 1px solid rgba(44, 42, 38, 0.06);
         }
         .join-detail-header h3 {
-            font-family: 'Instrument Serif', serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 1.25rem; color: var(--navy); margin-bottom: 4px;
         }
         .join-detail-meta {
@@ -819,7 +853,7 @@
         .join-people {
             display: flex; align-items: center; gap: 8px;
             padding: 14px 20px;
-            background: rgba(233, 162, 59, 0.08);
+            background: rgba(181, 89, 228, 0.08);
             font-size: 0.82rem; color: var(--text-light);
         }
         .join-people strong { color: var(--navy); }
@@ -830,7 +864,7 @@
             padding: 16px 16px;
             border: 2px solid var(--cream-dark);
             border-radius: var(--radius);
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 16px; /* Prevents iOS zoom */
             background: var(--white);
             color: var(--text);
@@ -848,7 +882,7 @@
             flex: 1; padding: 12px;
             border: none; background: transparent;
             cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 0.88rem; font-weight: 500;
             color: var(--text-light);
             transition: all 0.2s ease;
@@ -867,7 +901,7 @@
             padding: 16px;
             border: none;
             border-radius: var(--radius);
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Aeonik', sans-serif;
             font-size: 1rem; font-weight: 600;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -876,12 +910,12 @@
         .flow-btn-primary {
             background: var(--terracotta);
             color: var(--white);
-            box-shadow: 0 4px 16px rgba(212, 89, 59, 0.25);
+            box-shadow: 0 4px 16px rgba(228, 89, 219, 0.25);
         }
         .flow-btn-primary:hover {
             background: var(--terracotta-light);
             transform: translateY(-1px);
-            box-shadow: 0 6px 24px rgba(212, 89, 59, 0.3);
+            box-shadow: 0 6px 24px rgba(228, 89, 219, 0.3);
         }
         .flow-btn-primary:active { transform: translateY(0); }
         .flow-btn-secondary {
@@ -899,7 +933,7 @@
         .success-anim {
             width: 68px; height: 68px;
             border-radius: 50%;
-            background: rgba(212, 89, 59, 0.1);
+            background: rgba(228, 89, 219, 0.1);
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 18px;
             font-size: 1.8rem;
@@ -966,6 +1000,17 @@
                 max-width: none;
             }
 
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 100px 20px 60px;
+                gap: 32px;
+            }
+            .hero-content { align-items: center; }
+            .hero-image { max-width: 100%; }
+            .hero-image img { max-height: 400px; width: 100%; }
+            .hero-proof { justify-content: center; }
+
             .bottom-cta { padding: 48px 16px 64px; }
 
             /* Flow: full-width bottom sheet on mobile */
@@ -989,7 +1034,7 @@
             .nav-logo { font-size: 1.35rem; }
             .nav-cta { padding: 8px 16px; font-size: 0.82rem; }
 
-            .hero { padding: 90px 16px 48px; }
+            .hero { padding: 90px 16px 48px; gap: 24px; }
             .hero h1 { letter-spacing: -1px; }
             .hero-cta-main, .hero-cta-secondary { padding: 16px 28px; font-size: 0.95rem; }
 
@@ -1022,21 +1067,26 @@
 
 <!-- HERO -->
 <section class="hero">
-    <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        Early access — posti limitati
-    </div>
-    <h1>La città diventa più bella <em>insieme</em></h1>
-    <p class="hero-sub">Crea roadmap urbane, unisciti a esperienze condivise e conosci nuove persone. Non un evento. Un'intera giornata da vivere.</p>
-    <button class="hero-cta-main" onclick="openFlow('hero_cta')">
-        Prova una roadmap
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-    </button>
-    <div class="hero-proof">
-        <div class="hero-avatars">
-            <span>M</span><span>L</span><span>A</span><span>+</span>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Early access — posti limitati
         </div>
-        Già 240+ persone in lista d'attesa
+        <h1>Conosci nuove persone con <em>roadmap urbane</em> condivise</h1>
+        <p class="hero-sub">Crea roadmap urbane, unisciti a esperienze condivise e conosci nuove persone. Non un evento. Un'intera giornata da vivere.</p>
+        <button class="hero-cta-main" onclick="openFlow('hero_cta')">
+            Prova una roadmap
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <div class="hero-proof">
+            <div class="hero-avatars">
+                <span>M</span><span>L</span><span>A</span><span>+</span>
+            </div>
+            Già 240+ persone in lista d'attesa
+        </div>
+    </div>
+    <div class="hero-image">
+        <img src="hero-img.jpg" alt="Amici che si godono una giornata insieme al parco">
     </div>
 </section>
 
@@ -1047,17 +1097,17 @@
         <h2 class="section-title">Non un altro evento.<br>Un modo nuovo di vivere la città</h2>
         <div class="value-grid">
             <div class="value-card">
-                <div class="value-icon">&#x1f5fa;&#xfe0f;</div>
+                <div class="value-icon"><i data-lucide="map" style="width:24px;height:24px;color:var(--terracotta)"></i></div>
                 <h3>Crea la tua roadmap</h3>
                 <p>Componi una giornata con le tue tappe preferite: caffè, musei, aperitivi, street food. La tua città, la tua visione.</p>
             </div>
             <div class="value-card">
-                <div class="value-icon">&#x1f91d;</div>
+                <div class="value-icon"><i data-lucide="users" style="width:24px;height:24px;color:var(--amber)"></i></div>
                 <h3>Unisciti a quelle degli altri</h3>
                 <p>Sfoglia le roadmap create dalla community e partecipa a quelle che ti ispirano. Ogni esperienza è un'avventura condivisa.</p>
             </div>
             <div class="value-card">
-                <div class="value-icon">&#x2728;</div>
+                <div class="value-icon"><i data-lucide="sparkles" style="width:24px;height:24px;color:var(--navy)"></i></div>
                 <h3>Conosci persone nuove</h3>
                 <p>Non un match. Non un like. Un'intera giornata passata insieme, con momenti veri e connessioni autentiche.</p>
             </div>
@@ -1079,12 +1129,12 @@
             <div class="step">
                 <div class="step-num">2</div>
                 <h3>Incontra il gruppo</h3>
-                <p>Al giorno stabilito ti ritrovi con le persone iscritte. Volti nuovi, stessa voglia di esplorare.</p>
+                <p>Ti ritrovi con le persone iscritte, in tempo reale o nel giorno stabilito. Volti nuovi, stessa voglia di esplorare.</p>
             </div>
             <div class="step">
                 <div class="step-num">3</div>
                 <h3>Vivi la giornata</h3>
-                <p>Segui le tappe, scopri posti nuovi e lasciati sorprendere dalla serendipità della città.</p>
+                <p>Segui le tappe, scopri posti nuovi e lasciati sorprendere dalle bellezze della città.</p>
             </div>
         </div>
     </div>
@@ -1100,7 +1150,7 @@
             <!-- Roadmap 1 -->
             <div class="featured-card" onclick="openFlow('featured_card')">
                 <div class="featured-card-header">
-                    <div class="featured-card-emoji">&#x1f355;</div>
+                    <div class="featured-card-emoji"><i data-lucide="utensils" style="width:22px;height:22px;color:var(--terracotta)"></i></div>
                     <span class="featured-card-city">Roma</span>
                 </div>
                 <div class="featured-card-body">
@@ -1127,7 +1177,7 @@
             <!-- Roadmap 2 -->
             <div class="featured-card" onclick="openFlow('featured_card')">
                 <div class="featured-card-header">
-                    <div class="featured-card-emoji">&#x1f3d7;&#xfe0f;</div>
+                    <div class="featured-card-emoji"><i data-lucide="building" style="width:22px;height:22px;color:var(--amber)"></i></div>
                     <span class="featured-card-city">Milano</span>
                 </div>
                 <div class="featured-card-body">
@@ -1154,7 +1204,7 @@
             <!-- Roadmap 3 -->
             <div class="featured-card" onclick="openFlow('featured_card')">
                 <div class="featured-card-header">
-                    <div class="featured-card-emoji">&#x1f3a8;</div>
+                    <div class="featured-card-emoji"><i data-lucide="palette" style="width:22px;height:22px;color:#dbe459"></i></div>
                     <span class="featured-card-city">Napoli</span>
                 </div>
                 <div class="featured-card-body">
@@ -1202,7 +1252,7 @@
 
 <!-- FOOTER -->
 <footer>
-    &copy; 2026 Baiddy &middot; Vivi la città insieme
+    &copy; 2026 Baiddy &middot; Conosci nuove persone con roadmap urbane condivise
 </footer>
 
 <!-- ========== FLOW OVERLAY ========== -->
@@ -1215,10 +1265,10 @@
             <!-- STEP: Role Select -->
             <div class="flow-step" id="stepRole">
                 <h2>Come vuoi iniziare?</h2>
-                <p class="flow-desc">Scegli il tuo ruolo per provare l'esperienza Baiddy.</p>
+                <p class="flow-desc">Scegli come vivere Baiddy oggi</p>
                 <div class="role-cards">
                     <div class="role-card" onclick="selectRole('creator')">
-                        <div class="role-card-icon">&#x1f3a8;</div>
+                        <div class="role-card-icon"><i data-lucide="pencil-ruler" style="width:22px;height:22px;color:var(--terracotta)"></i></div>
                         <div>
                             <h3>Creator</h3>
                             <p>Crea e pubblica la tua roadmap urbana</p>
@@ -1226,7 +1276,7 @@
                         <svg class="role-card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
                     </div>
                     <div class="role-card" onclick="selectRole('joiner')">
-                        <div class="role-card-icon">&#x1f30d;</div>
+                        <div class="role-card-icon"><i data-lucide="compass" style="width:22px;height:22px;color:var(--amber)"></i></div>
                         <div>
                             <h3>Joiner</h3>
                             <p>Esplora e partecipa a una roadmap esistente</p>
@@ -1239,22 +1289,22 @@
             <!-- CREATOR STEP 1: City -->
             <div class="flow-step" id="stepCreatorCity">
                 <h2>In quale città?</h2>
-                <p class="flow-desc">Scegli dove ambientare la tua roadmap.</p>
+                <p class="flow-desc">Dove vuoi creare la tua esperienza?</p>
                 <div class="city-grid">
                     <button class="city-btn" onclick="selectCity(this, 'Milano')">
-                        <span>&#x1f3d9;&#xfe0f;</span>
+                        <span><i data-lucide="building-2" style="width:24px;height:24px;color:var(--terracotta)"></i></span>
                         <strong>Milano</strong>
                     </button>
                     <button class="city-btn" onclick="selectCity(this, 'Roma')">
-                        <span>&#x1f3db;&#xfe0f;</span>
+                        <span><i data-lucide="landmark" style="width:24px;height:24px;color:var(--amber)"></i></span>
                         <strong>Roma</strong>
                     </button>
                     <button class="city-btn" onclick="selectCity(this, 'Napoli')">
-                        <span>&#x1f30b;</span>
+                        <span><i data-lucide="mountain" style="width:24px;height:24px;color:#dbe459"></i></span>
                         <strong>Napoli</strong>
                     </button>
                     <button class="city-btn" onclick="selectCity(this, 'Firenze')">
-                        <span>&#x1f3a8;</span>
+                        <span><i data-lucide="palette" style="width:24px;height:24px;color:var(--terracotta)"></i></span>
                         <strong>Firenze</strong>
                     </button>
                 </div>
@@ -1264,19 +1314,19 @@
             <!-- CREATOR STEP 2: Stops -->
             <div class="flow-step" id="stepCreatorStops">
                 <h2>Aggiungi le tappe</h2>
-                <p class="flow-desc">Dai un nome e una categoria ad ogni tappa (min. 2).</p>
+                <p class="flow-desc">Dai un nome e una categoria ad ogni tappa (min. 2). Le roadmap create ora sono simulate (early access)</p>
                 <div class="stop-form" id="stopForm">
                     <div id="addedStops"></div>
                     <input class="stop-input" type="text" id="stopNameInput" placeholder="Nome della tappa (es. Caffè Napoli)" maxlength="60">
+                    <label style="font-size:0.82rem;font-weight:500;color:var(--text-light)">Seleziona una categoria</label>
                     <div class="category-pills" id="catPills">
-                        <button class="cat-pill" onclick="selectCat(this, 'Food')">&#x1f354; Food</button>
-                        <button class="cat-pill" onclick="selectCat(this, 'Cultura')">&#x1f3ad; Cultura</button>
-                        <button class="cat-pill" onclick="selectCat(this, 'Nightlife')">&#x1f378; Nightlife</button>
-                        <button class="cat-pill" onclick="selectCat(this, 'Shopping')">&#x1f6cd;&#xfe0f; Shopping</button>
-                        <button class="cat-pill" onclick="selectCat(this, 'Natura')">&#x1f343; Natura</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Food')"><i data-lucide="utensils" style="width:14px;height:14px;vertical-align:-2px"></i> Food</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Cultura')"><i data-lucide="theater" style="width:14px;height:14px;vertical-align:-2px"></i> Cultura</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Nightlife')"><i data-lucide="wine" style="width:14px;height:14px;vertical-align:-2px"></i> Nightlife</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Shopping')"><i data-lucide="shopping-bag" style="width:14px;height:14px;vertical-align:-2px"></i> Shopping</button>
+                        <button class="cat-pill" onclick="selectCat(this, 'Natura')"><i data-lucide="trees" style="width:14px;height:14px;vertical-align:-2px"></i> Natura</button>
                     </div>
-                    <div class="stop-hint" id="stopHint">Scrivi un nome e seleziona una categoria</div>
-                    <button class="add-stop-btn" id="addStopBtn" onclick="addStop()">+ Aggiungi tappa</button>
+                    <div class="stop-hint" id="stopHint">Scrivi un nome, poi seleziona una categoria per aggiungere</div>
                 </div>
                 <button class="flow-btn flow-btn-primary" style="margin-top:18px" id="btnStopsNext" disabled onclick="goCreatorPreview()">Vedi anteprima</button>
             </div>
@@ -1292,14 +1342,15 @@
             <!-- JOINER STEP 1: Browse -->
             <div class="flow-step" id="stepJoinerBrowse">
                 <h2>Esplora le roadmap</h2>
-                <p class="flow-desc">Ecco cosa sta succedendo nella tua città questo weekend.</p>
+                <p class="flow-desc">Scopri le roadmap attive e programmate nella tua città.</p>
                 <div class="roadmap-list" id="roadmapList"></div>
             </div>
 
             <!-- JOINER STEP 2: Detail -->
             <div class="flow-step" id="stepJoinerDetail">
                 <div class="join-detail" id="joinDetail"></div>
-                <button class="flow-btn flow-btn-primary" style="margin-top:18px" onclick="goLead()">Unisciti a questa roadmap</button>
+                <p style="text-align:center; font-size:0.78rem; color:var(--warm-gray); margin-top:14px;">Esperienza simulata – accesso anticipato</p>
+                <button class="flow-btn flow-btn-primary" style="margin-top:10px" onclick="goLead()">Unisciti a questa roadmap</button>
                 <button class="flow-btn flow-btn-secondary" onclick="goJoinerBrowse()">Torna all'elenco</button>
             </div>
 
@@ -1320,7 +1371,7 @@
             <!-- SUCCESS -->
             <div class="flow-step" id="stepSuccess">
                 <div style="text-align:center">
-                    <div class="success-anim">&#x1f389;</div>
+                    <div class="success-anim"><i data-lucide="check-circle" style="width:32px;height:32px;color:var(--terracotta)"></i></div>
                     <h2 style="margin-bottom:8px">Sei dentro!</h2>
                     <p class="flow-desc" style="margin-bottom:0">Ti contatteremo appena Baiddy sarà disponibile nella tua città. Preparati a esplorare.</p>
                 </div>
@@ -1343,22 +1394,22 @@
     // Fake roadmap data (using text emojis for JS rendering)
     const fakeRoadmaps = [
         {
-            id: 1, title: 'Sapori di Trastevere', city: 'Roma', emoji: '\u{1F355}',
+            id: 1, title: 'Sapori di Trastevere', city: 'Roma', icon: 'utensils',
             author: 'Marco R.', people: 4, stops: ['Supplizio', 'Forno Roscioni', 'Bar San Calisto', 'Ponte Sisto al tramonto'],
             date: 'Sabato 15 Mar', tags: ['Food', 'Nightlife']
         },
         {
-            id: 2, title: 'Milano nascosta', city: 'Milano', emoji: '\u{1F3D7}\uFE0F',
+            id: 2, title: 'Milano nascosta', city: 'Milano', icon: 'building',
             author: 'Sofia L.', people: 3, stops: ['Cortili segreti di Brera', 'Fondazione Prada', 'Navigli al tramonto', 'Jazz al Blue Note'],
             date: 'Domenica 16 Mar', tags: ['Cultura', 'Nightlife']
         },
         {
-            id: 3, title: 'Street art & caffè', city: 'Napoli', emoji: '\u{1F3A8}',
+            id: 3, title: 'Street art & caffè', city: 'Napoli', icon: 'palette',
             author: 'Luca G.', people: 5, stops: ['Murales dei Quartieri Spagnoli', 'Caffè Gambrinus', 'Spaccanapoli walk', 'Aperitivo sul Lungomare'],
             date: 'Sabato 15 Mar', tags: ['Cultura', 'Food']
         },
         {
-            id: 4, title: 'Firenze slow', city: 'Firenze', emoji: '\u{1F33B}',
+            id: 4, title: 'Firenze slow', city: 'Firenze', icon: 'flower-2',
             author: 'Giulia D.', people: 2, stops: ['Giardino delle Rose', 'San Lorenzo Market', 'Oltrarno artigianale'],
             date: 'Domenica 16 Mar', tags: ['Natura', 'Shopping']
         }
@@ -1391,10 +1442,8 @@
         selectedRoadmap = null;
 
         // Reset creator stops UI (fix: inline styles from previous session)
-        const addStopBtn = document.getElementById('addStopBtn');
         const stopNameInput = document.getElementById('stopNameInput');
         const catPills = document.getElementById('catPills');
-        if (addStopBtn) addStopBtn.style.display = '';
         if (stopNameInput) { stopNameInput.style.display = ''; stopNameInput.value = ''; }
         if (catPills) catPills.style.display = '';
         document.getElementById('addedStops').innerHTML = '';
@@ -1405,6 +1454,7 @@
         document.getElementById('stopHint').classList.remove('visible');
 
         showStep('stepRole');
+        lucide.createIcons();
         track('flow_open', { source: source });
     }
 
@@ -1489,7 +1539,6 @@
         document.getElementById('addedStops').innerHTML = '';
         document.getElementById('stopNameInput').value = '';
         document.getElementById('stopNameInput').style.display = '';
-        document.getElementById('addStopBtn').style.display = '';
         document.getElementById('catPills').style.display = '';
         document.getElementById('stopHint').classList.remove('visible');
         selectedCat = null;
@@ -1503,21 +1552,44 @@
         document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('selected'));
         pill.classList.add('selected');
         selectedCat = cat;
-        document.getElementById('stopHint').classList.remove('visible');
+
+        // Auto-add: if name is filled, add the stop immediately
+        const nameInput = document.getElementById('stopNameInput');
+        const name = nameInput.value.trim();
+        if (name) {
+            addStop();
+        } else {
+            const hint = document.getElementById('stopHint');
+            hint.textContent = 'Scrivi il nome della tappa qui sopra';
+            hint.classList.add('visible');
+            nameInput.focus();
+        }
     }
+
+    // Auto-add on input: if category already selected and user finishes typing
+    (function() {
+        let inputTimer = null;
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('stopNameInput');
+            if (!input) return;
+            input.addEventListener('input', function() {
+                clearTimeout(inputTimer);
+                const name = input.value.trim();
+                if (name && selectedCat) {
+                    // Small delay so user can finish typing
+                    inputTimer = setTimeout(() => {
+                        if (input.value.trim() && selectedCat) addStop();
+                    }, 800);
+                }
+            });
+        });
+    })();
 
     function addStop() {
         const nameInput = document.getElementById('stopNameInput');
         const name = nameInput.value.trim();
         const hint = document.getElementById('stopHint');
 
-        // Show feedback if missing fields
-        if (!name && !selectedCat) {
-            hint.textContent = 'Scrivi un nome e seleziona una categoria';
-            hint.classList.add('visible');
-            nameInput.focus();
-            return;
-        }
         if (!name) {
             hint.textContent = 'Scrivi il nome della tappa';
             hint.classList.add('visible');
@@ -1525,7 +1597,7 @@
             return;
         }
         if (!selectedCat) {
-            hint.textContent = 'Seleziona una categoria';
+            hint.textContent = 'Ora seleziona una categoria';
             hint.classList.add('visible');
             return;
         }
@@ -1536,11 +1608,7 @@
         creatorStops.push({ name, category: selectedCat });
         track('creator_stop_added', { stop_name: name, category: selectedCat, stop_count: creatorStops.length });
 
-        const container = document.getElementById('addedStops');
-        const el = document.createElement('div');
-        el.className = 'stop-added';
-        el.innerHTML = `<strong>${creatorStops.length}.</strong> ${escapeHtml(name)} <span class="stop-added-cat">${escapeHtml(selectedCat)}</span>`;
-        container.appendChild(el);
+        renderStops();
 
         nameInput.value = '';
         selectedCat = null;
@@ -1549,10 +1617,32 @@
 
         document.getElementById('btnStopsNext').disabled = creatorStops.length < 2;
         if (creatorStops.length >= 5) {
-            document.getElementById('addStopBtn').style.display = 'none';
             document.getElementById('stopNameInput').style.display = 'none';
             document.getElementById('catPills').style.display = 'none';
         }
+    }
+
+    function removeStop(index) {
+        creatorStops.splice(index, 1);
+        renderStops();
+        document.getElementById('btnStopsNext').disabled = creatorStops.length < 2;
+        // Re-show input if we go back under 5
+        if (creatorStops.length < 5) {
+            document.getElementById('stopNameInput').style.display = '';
+            document.getElementById('catPills').style.display = '';
+        }
+        track('creator_stop_removed', { stop_count: creatorStops.length });
+    }
+
+    function renderStops() {
+        const container = document.getElementById('addedStops');
+        container.innerHTML = creatorStops.map((s, i) =>
+            `<div class="stop-added">
+                <strong>${i + 1}.</strong> ${escapeHtml(s.name)}
+                <span class="stop-added-cat">${escapeHtml(s.category)}</span>
+                <button class="stop-remove" onclick="removeStop(${i})" aria-label="Rimuovi tappa">&times;</button>
+            </div>`
+        ).join('');
     }
 
     // XSS protection for user-entered text
@@ -1589,7 +1679,7 @@
         const list = document.getElementById('roadmapList');
         list.innerHTML = fakeRoadmaps.map(r => `
             <div class="roadmap-item" onclick="selectRoadmap(${r.id})">
-                <div class="roadmap-emoji">${r.emoji}</div>
+                <div class="roadmap-emoji"><i data-lucide="${r.icon}" style="width:20px;height:20px;color:var(--terracotta)"></i></div>
                 <div class="roadmap-info">
                     <h3>${r.title}</h3>
                     <div class="roadmap-meta">
@@ -1601,6 +1691,7 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;color:var(--cream-dark)"><path d="m9 18 6-6-6-6"/></svg>
             </div>
         `).join('');
+        lucide.createIcons();
         showStep('stepJoinerBrowse');
         track('joiner_step_browse');
     }
@@ -1621,7 +1712,7 @@
 
         detail.innerHTML = `
             <div class="join-detail-header">
-                <h3>${selectedRoadmap.emoji} ${selectedRoadmap.title}</h3>
+                <h3><i data-lucide="${selectedRoadmap.icon}" style="width:20px;height:20px;vertical-align:-3px;margin-right:6px"></i>${selectedRoadmap.title}</h3>
                 <div class="join-detail-meta">
                     <span>di ${selectedRoadmap.author}</span>
                     <span>${selectedRoadmap.date}</span>
@@ -1634,6 +1725,7 @@
             </div>
         `;
         showStep('stepJoinerDetail');
+        lucide.createIcons();
     }
 
     // ========== LEAD CAPTURE ==========
@@ -1721,9 +1813,18 @@
         if (e.key === 'Escape') closeFlow();
         if (e.key === 'Enter' && currentStep === 'stepCreatorStops') {
             e.preventDefault();
-            addStop();
+            if (!selectedCat) {
+                const hint = document.getElementById('stopHint');
+                hint.textContent = 'Ora seleziona una categoria';
+                hint.classList.add('visible');
+            } else {
+                addStop();
+            }
         }
     });
+
+    // Initialize Lucide icons
+    lucide.createIcons();
 </script>
 
 </body>
