@@ -1416,11 +1416,24 @@
     ];
 
     // ========== GA4 + GOOGLE SHEET TRACKING ==========
-    const SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwq-al0HGjrlOVJ4HR82ORyYb_2FsxVT31qxD8ql7MTErH7dmxGQT64665b_ma_g4MuoA/exec';
+    const SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwzv78zohN8NMcTjSmenM4BPHqvfczJ_dKr0509ire9XgnPsOVsmj0ChWJZAPphaO31IA/exec';
     var sessionId = '';
+    var sessionStart = 0;
 
     function generateSessionId() {
         return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
+    }
+
+    function getDevice() {
+        var w = window.innerWidth;
+        if (w <= 768) return 'mobile';
+        if (w <= 1024) return 'tablet';
+        return 'desktop';
+    }
+
+    function getElapsedSeconds() {
+        if (!sessionStart) return 0;
+        return Math.round((Date.now() - sessionStart) / 1000);
     }
 
     function track(eventName, params = {}) {
@@ -1440,6 +1453,8 @@
                 event: eventName,
                 role: currentRole || '',
                 source: flowSource || '',
+                device: getDevice(),
+                elapsed: getElapsedSeconds(),
                 params: params
             })
         }).catch(function(err) { console.warn('[Sheet]', err); });
@@ -1449,6 +1464,7 @@
     function openFlow(source) {
         flowSource = source;
         sessionId = generateSessionId();
+        sessionStart = Date.now();
         const overlay = document.getElementById('flowOverlay');
         overlay.classList.add('active');
         requestAnimationFrame(() => {
