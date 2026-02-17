@@ -1416,7 +1416,12 @@
     ];
 
     // ========== GA4 + GOOGLE SHEET TRACKING ==========
-    const SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwfcARE98Oww1T_k6YKbPBPSf6wLb0T3A0a0VhQmWweZHBJ-J8b1pE7NmbK7BPk8RhI_w/exec';
+    const SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwq-al0HGjrlOVJ4HR82ORyYb_2FsxVT31qxD8ql7MTErH7dmxGQT64665b_ma_g4MuoA/exec';
+    var sessionId = '';
+
+    function generateSessionId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
+    }
 
     function track(eventName, params = {}) {
         params.timestamp = new Date().toISOString();
@@ -1431,6 +1436,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 timestamp: params.timestamp,
+                session: sessionId,
                 event: eventName,
                 role: currentRole || '',
                 source: flowSource || '',
@@ -1442,6 +1448,7 @@
     // ========== FLOW CONTROL ==========
     function openFlow(source) {
         flowSource = source;
+        sessionId = generateSessionId();
         const overlay = document.getElementById('flowOverlay');
         overlay.classList.add('active');
         requestAnimationFrame(() => {
