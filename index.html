@@ -1806,6 +1806,7 @@
         track('lead_submitted', {
             role: currentRole,
             lead_type: leadType,
+            contact: value,
             source: flowSource,
             city: creatorCity || (selectedRoadmap ? selectedRoadmap.city : null),
             stops_count: currentRole === 'creator' ? creatorStops.length : null,
