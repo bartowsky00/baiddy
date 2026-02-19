@@ -332,19 +332,15 @@
             padding: 0 12px;
             position: relative;
         }
-        .step-num {
-            width: 52px; height: 52px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Aeonik', sans-serif;
-            font-size: 1.3rem;
+        .step-icon {
+            width: 72px; height: 72px;
             margin: 0 auto 20px;
             position: relative;
             z-index: 1;
         }
-        .step:nth-child(1) .step-num { background: var(--terracotta); color: var(--white); }
-        .step:nth-child(2) .step-num { background: var(--amber); color: var(--white); }
-        .step:nth-child(3) .step-num { background: #dbe459; color: var(--navy); }
+        .step-icon svg {
+            width: 100%; height: 100%;
+        }
 
         .step h3 {
             font-weight: 600; font-size: 1.05rem;
@@ -1122,17 +1118,52 @@
         <h2 class="section-title">Tre passi e sei fuori</h2>
         <div class="steps">
             <div class="step">
-                <div class="step-num">1</div>
+                <div class="step-icon">
+                    <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="36" cy="36" r="34" fill="#e459db" opacity="0.12"/>
+                        <path d="M36 18c-8.8 0-16 7.2-16 16 0 12 16 22 16 22s16-10 16-22c0-8.8-7.2-16-16-16z" fill="#e459db" opacity="0.25"/>
+                        <path d="M36 20c-7.7 0-14 6.3-14 14 0 10.5 14 19.5 14 19.5S50 44.5 50 34c0-7.7-6.3-14-14-14z" stroke="#e459db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <circle cx="36" cy="34" r="5" stroke="#e459db" stroke-width="2" fill="none"/>
+                        <path d="M24 22l-3-4M48 22l3-4M36 14v-4" stroke="#e459db" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                        <rect x="17" y="28" width="6" height="4" rx="2" fill="#e459db" opacity="0.3"/>
+                        <rect x="49" y="28" width="6" height="4" rx="2" fill="#e459db" opacity="0.3"/>
+                    </svg>
+                </div>
                 <h3>Scegli o crea</h3>
                 <p>Crea una roadmap con le tue tappe preferite oppure sfoglia quelle pubblicate da altri.</p>
             </div>
             <div class="step">
-                <div class="step-num">2</div>
+                <div class="step-icon">
+                    <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="36" cy="36" r="34" fill="#b559e4" opacity="0.12"/>
+                        <circle cx="28" cy="30" r="7" stroke="#b559e4" stroke-width="2" fill="none"/>
+                        <circle cx="44" cy="30" r="7" stroke="#b559e4" stroke-width="2" fill="none"/>
+                        <path d="M18 48c0-5.5 4.5-10 10-10h2" stroke="#b559e4" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M54 48c0-5.5-4.5-10-10-10h-2" stroke="#b559e4" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M33 38c0 0 1.5 2 3 2s3-2 3-2" stroke="#b559e4" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+                        <circle cx="36" cy="54" r="3" fill="#b559e4" opacity="0.4"/>
+                        <circle cx="28" cy="56" r="2" fill="#b559e4" opacity="0.25"/>
+                        <circle cx="44" cy="56" r="2" fill="#b559e4" opacity="0.25"/>
+                        <path d="M26 26.5c0.8-0.5 1.8-0.5 2.5 0M42 26.5c0.8-0.5 1.8-0.5 2.5 0" stroke="#b559e4" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                    </svg>
+                </div>
                 <h3>Incontra il gruppo</h3>
                 <p>Ti ritrovi con le persone iscritte, in tempo reale o nel giorno stabilito. Volti nuovi, stessa voglia di esplorare.</p>
             </div>
             <div class="step">
-                <div class="step-num">3</div>
+                <div class="step-icon">
+                    <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="36" cy="36" r="34" fill="#dbe459" opacity="0.15"/>
+                        <path d="M22 50V30l14-12 14 12v20H22z" stroke="#c5b800" stroke-width="2" stroke-linejoin="round" fill="none"/>
+                        <rect x="30" y="40" width="12" height="10" rx="1" stroke="#c5b800" stroke-width="2" fill="none"/>
+                        <circle cx="36" cy="32" r="3" fill="#c5b800" opacity="0.5"/>
+                        <path d="M15 34l21-18 21 18" stroke="#c5b800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <path d="M48 24v-5h6v11" stroke="#c5b800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <path d="M14 54h44" stroke="#c5b800" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+                        <circle cx="55" cy="20" r="5" fill="#dbe459" opacity="0.4"/>
+                        <path d="M53 20h4M55 18v4" stroke="#c5b800" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+                    </svg>
+                </div>
                 <h3>Vivi la giornata</h3>
                 <p>Segui le tappe, scopri posti nuovi e lasciati sorprendere dalle bellezze della città.</p>
             </div>
