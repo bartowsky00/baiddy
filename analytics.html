@@ -730,6 +730,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
                     Aggiorna
                 </button>
+                <button class="btn-refresh" onclick="clearEvents()" style="color:var(--red);border-color:rgba(228,89,104,0.3)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                    Cancella
+                </button>
             </div>
         </header>
 
@@ -906,7 +910,7 @@
     var filteredEvents = [];
     var liveMode = false;
     var liveInterval = null;
-    var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwzv78zohN8NMcTjSmenM4BPHqvfczJ_dKr0509ire9XgnPsOVsmj0ChWJZAPphaO31IA/exec';
+    // Events are read from localStorage (key: baiddy_events), written by the main site's track() function
 
     // ===== EVENT COLORS =====
     var eventColors = {
@@ -930,47 +934,48 @@
     document.addEventListener('DOMContentLoaded', function() {
         setupFilterListeners();
         loadData();
+        // Listen for real-time updates from the main site (same domain, different tab)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'baiddy_events') {
+                loadFromLocalStorage();
+            }
+        });
     });
 
     // ===== DATA LOADING =====
     function loadData() {
         var btn = document.getElementById('btnRefresh');
         btn.classList.add('loading');
-        showStatus('info', 'Caricamento dati dal webhook...');
-
-        fetch(WEBHOOK_URL + '?action=read', { method: 'GET' })
-            .then(function(res) {
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                return res.text();
-            })
-            .then(function(text) {
-                btn.classList.remove('loading');
-                // Try parsing as JSON
-                var data;
-                try { data = JSON.parse(text); } catch(e) { data = null; }
-
-                if (data && Array.isArray(data)) {
-                    allEvents = normalizeEvents(data);
-                    showStatus('success', 'Caricati ' + allEvents.length + ' eventi dal webhook.');
-                    applyFilters();
-                } else if (data && data.data && Array.isArray(data.data)) {
-                    allEvents = normalizeEvents(data.data);
-                    showStatus('success', 'Caricati ' + allEvents.length + ' eventi dal webhook.');
-                    applyFilters();
-                } else {
-                    // Webhook returned non-JSON (e.g. "Webhook attivo")
-                    showStatus('info', 'Webhook connesso. Per visualizzare i dati, esporta il Google Sheet in JSON e incollalo qui sotto, oppure carica i dati demo.');
-                    openImportPanel();
-                }
-            })
-            .catch(function(err) {
-                btn.classList.remove('loading');
-                showStatus('error', 'Impossibile connettersi al webhook (' + err.message + '). Usa l\'importazione manuale o carica i dati demo.');
-                openImportPanel();
-                console.warn('Fetch error:', err);
-            });
-
+        loadFromLocalStorage();
+        btn.classList.remove('loading');
         updateLastRefresh();
+    }
+
+    function loadFromLocalStorage() {
+        try {
+            var stored = JSON.parse(localStorage.getItem('baiddy_events') || '[]');
+            if (stored.length > 0) {
+                allEvents = normalizeEvents(stored);
+                showStatus('success', allEvents.length + ' eventi caricati dal sito.');
+                applyFilters();
+            } else {
+                allEvents = [];
+                showStatus('info', 'Nessun evento registrato. Apri il sito principale e prova una roadmap per generare eventi.');
+                applyFilters();
+            }
+        } catch(e) {
+            showStatus('error', 'Errore nella lettura dei dati locali: ' + e.message);
+        }
+    }
+
+    function clearEvents() {
+        if (confirm('Vuoi cancellare tutti gli eventi salvati?')) {
+            localStorage.removeItem('baiddy_events');
+            allEvents = [];
+            filteredEvents = [];
+            showStatus('success', 'Eventi cancellati.');
+            applyFilters();
+        }
     }
 
     function openImportPanel() {
@@ -1515,7 +1520,7 @@
         if (liveMode) {
             badge.classList.remove('inactive');
             label.textContent = 'Live';
-            liveInterval = setInterval(loadData, 30000);
+            liveInterval = setInterval(loadData, 5000);
         } else {
             badge.classList.add('inactive');
             label.textContent = 'Pausa';
