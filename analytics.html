@@ -941,29 +941,45 @@
         fetch(WEBHOOK_URL + '?action=read', { method: 'GET' })
             .then(function(res) {
                 if (!res.ok) throw new Error('HTTP ' + res.status);
-                return res.json();
+                return res.text();
             })
-            .then(function(data) {
+            .then(function(text) {
                 btn.classList.remove('loading');
-                if (Array.isArray(data)) {
+                // Try parsing as JSON
+                var data;
+                try { data = JSON.parse(text); } catch(e) { data = null; }
+
+                if (data && Array.isArray(data)) {
                     allEvents = normalizeEvents(data);
                     showStatus('success', 'Caricati ' + allEvents.length + ' eventi dal webhook.');
                     applyFilters();
-                } else if (data && Array.isArray(data.data)) {
+                } else if (data && data.data && Array.isArray(data.data)) {
                     allEvents = normalizeEvents(data.data);
                     showStatus('success', 'Caricati ' + allEvents.length + ' eventi dal webhook.');
                     applyFilters();
                 } else {
-                    showStatus('error', 'Il webhook non ha restituito dati validi. Usa l\'importazione manuale.');
+                    // Webhook returned non-JSON (e.g. "Webhook attivo")
+                    showStatus('info', 'Webhook connesso. Per visualizzare i dati, esporta il Google Sheet in JSON e incollalo qui sotto, oppure carica i dati demo.');
+                    openImportPanel();
                 }
             })
             .catch(function(err) {
                 btn.classList.remove('loading');
-                showStatus('error', 'Impossibile caricare dal webhook (' + err.message + '). Usa l\'importazione manuale o carica i dati demo.');
+                showStatus('error', 'Impossibile connettersi al webhook (' + err.message + '). Usa l\'importazione manuale o carica i dati demo.');
+                openImportPanel();
                 console.warn('Fetch error:', err);
             });
 
         updateLastRefresh();
+    }
+
+    function openImportPanel() {
+        var toggle = document.getElementById('importToggle');
+        var body = document.getElementById('importBody');
+        if (!body.classList.contains('visible')) {
+            toggle.classList.add('open');
+            body.classList.add('visible');
+        }
     }
 
     function normalizeEvents(data) {
