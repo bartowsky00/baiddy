@@ -318,14 +318,6 @@
             justify-content: center;
             position: relative;
         }
-        .steps::before {
-            content: '';
-            position: absolute; top: 28px;
-            left: calc(16.66% + 20px); right: calc(16.66% + 20px);
-            height: 2px;
-            background: linear-gradient(90deg, var(--terracotta), var(--amber), var(--navy-mid));
-            opacity: 0.2;
-        }
         .step {
             flex: 1; max-width: 280px;
             text-align: center;
@@ -988,7 +980,6 @@
             .value-card { padding: 24px 20px; }
 
             .steps { flex-direction: column; align-items: center; gap: 28px; }
-            .steps::before { display: none; }
             .step { max-width: 100%; }
 
             .featured-grid { grid-template-columns: 1fr; }
