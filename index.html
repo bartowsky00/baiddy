@@ -1497,6 +1497,9 @@
         if (typeof gtag === 'function') {
             gtag('event', eventName, params);
         }
+        if (typeof fbq === 'function') {
+            fbq('trackCustom', eventName, params);
+        }
         var eventPayload = {
             timestamp: params.timestamp,
             session: sessionId,
@@ -1507,13 +1510,18 @@
             elapsed: getElapsedSeconds(),
             params: params
         };
-        // Send to Google Sheet
-        fetch(SHEET_WEBHOOK, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(eventPayload)
-        }).catch(function(err) { console.warn('[Sheet]', err); });
+        // Send to Google Sheet — use sendBeacon (reliable on mobile) with fetch fallback
+        var jsonBody = JSON.stringify(eventPayload);
+        if (navigator.sendBeacon) {
+            navigator.sendBeacon(SHEET_WEBHOOK, new Blob([jsonBody], { type: 'application/json' }));
+        } else {
+            fetch(SHEET_WEBHOOK, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: jsonBody
+            }).catch(function(err) { console.warn('[Sheet]', err); });
+        }
         // Save to localStorage for analytics dashboard
         try {
             var stored = JSON.parse(localStorage.getItem('baiddy_events') || '[]');
