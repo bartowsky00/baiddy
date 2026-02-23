@@ -1510,17 +1510,20 @@
             elapsed: getElapsedSeconds(),
             params: params
         };
-        // Send to Google Sheet — use sendBeacon (reliable on mobile) with fetch fallback
+        // Send to Google Sheet — fetch with keepalive (survives page close + follows redirects)
+        // sendBeacon fails on Safari iOS because Google Apps Script returns a 302 redirect
         var jsonBody = JSON.stringify(eventPayload);
-        if (navigator.sendBeacon) {
-            navigator.sendBeacon(SHEET_WEBHOOK, new Blob([jsonBody], { type: 'application/json' }));
-        } else {
+        try {
             fetch(SHEET_WEBHOOK, {
                 method: 'POST',
                 mode: 'no-cors',
+                keepalive: true,
                 headers: { 'Content-Type': 'application/json' },
                 body: jsonBody
-            }).catch(function(err) { console.warn('[Sheet]', err); });
+            }).catch(function() {});
+        } catch(e) {
+            // Ultimate fallback: image pixel GET request (works everywhere, no CORS)
+            new Image().src = SHEET_WEBHOOK + '?data=' + encodeURIComponent(jsonBody) + '&_t=' + Date.now();
         }
         // Save to localStorage for analytics dashboard
         try {
