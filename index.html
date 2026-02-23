@@ -1510,27 +1510,24 @@
             elapsed: getElapsedSeconds(),
             params: params
         };
-        // Send to Google Sheet — fetch with keepalive (survives page close + follows redirects)
-        // sendBeacon fails on Safari iOS because Google Apps Script returns a 302 redirect
         var jsonBody = JSON.stringify(eventPayload);
-        try {
-            fetch(SHEET_WEBHOOK, {
-                method: 'POST',
-                mode: 'no-cors',
-                keepalive: true,
-                headers: { 'Content-Type': 'application/json' },
-                body: jsonBody
-            }).catch(function() {});
-        } catch(e) {
-            // Ultimate fallback: image pixel GET request (works everywhere, no CORS)
-            new Image().src = SHEET_WEBHOOK + '?data=' + encodeURIComponent(jsonBody) + '&_t=' + Date.now();
-        }
+        // Primary: image pixel GET — zero CORS issues, works on every mobile browser
+        // Safari iOS blocks no-cors POST with application/json, so GET is the reliable path
+        new Image().src = SHEET_WEBHOOK + '?data=' + encodeURIComponent(jsonBody) + '&_t=' + Date.now();
+        // Secondary: fetch POST with text/plain (valid simple header for no-cors mode)
+        fetch(SHEET_WEBHOOK, {
+            method: 'POST',
+            mode: 'no-cors',
+            keepalive: true,
+            headers: { 'Content-Type': 'text/plain' },
+            body: jsonBody
+        }).catch(function() {});
         // Save to localStorage for analytics dashboard
         try {
             var stored = JSON.parse(localStorage.getItem('baiddy_events') || '[]');
             stored.push(eventPayload);
             localStorage.setItem('baiddy_events', JSON.stringify(stored));
-        } catch(e) { console.warn('[LocalStore]', e); }
+        } catch(e) {}
     }
 
     // ========== FLOW CONTROL ==========
