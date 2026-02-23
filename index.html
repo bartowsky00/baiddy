@@ -1471,9 +1471,9 @@
     ];
 
     // ========== GA4 + GOOGLE SHEET TRACKING ==========
-    const SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwpTRjvVzZBwI4pdKEmPy9oji9xgDU62UOKX0j9TyAK-ZfZy6iH9GDFHQMd-Lr8Imb1fA/exec';
     var sessionId = '';
     var sessionStart = 0;
+    var _trackImgs = [];
 
     function generateSessionId() {
         return Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
@@ -1511,17 +1511,21 @@
             params: params
         };
         var jsonBody = JSON.stringify(eventPayload);
-        // Primary: image pixel GET — zero CORS issues, works on every mobile browser
-        // Safari iOS blocks no-cors POST with application/json, so GET is the reliable path
-        new Image().src = SHEET_WEBHOOK + '?data=' + encodeURIComponent(jsonBody) + '&_t=' + Date.now();
-        // Secondary: fetch POST with text/plain (valid simple header for no-cors mode)
-        fetch(SHEET_WEBHOOK, {
+        // Primary: same-origin fetch via Vercel proxy (no CORS, no content blockers)
+        fetch('/api/track', {
             method: 'POST',
-            mode: 'no-cors',
             keepalive: true,
-            headers: { 'Content-Type': 'text/plain' },
+            headers: { 'Content-Type': 'application/json' },
             body: jsonBody
         }).catch(function() {});
+        // Backup: same-origin image pixel (survives page close, no GC issues)
+        var img = new Image();
+        _trackImgs.push(img);
+        img.onload = img.onerror = function() {
+            var i = _trackImgs.indexOf(img);
+            if (i >= 0) _trackImgs.splice(i, 1);
+        };
+        img.src = '/api/track?data=' + encodeURIComponent(jsonBody) + '&_t=' + Date.now();
         // Save to localStorage for analytics dashboard
         try {
             var stored = JSON.parse(localStorage.getItem('baiddy_events') || '[]');
