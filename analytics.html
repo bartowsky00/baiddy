@@ -946,9 +946,49 @@
     function loadData() {
         var btn = document.getElementById('btnRefresh');
         btn.classList.add('loading');
-        loadFromLocalStorage();
-        btn.classList.remove('loading');
-        updateLastRefresh();
+        showStatus('info', 'Caricamento eventi dal server...');
+        // Fetch from Google Sheet via server proxy
+        fetch('/api/events')
+            .then(function(res) { return res.json(); })
+            .then(function(serverEvents) {
+                // Merge server events with localStorage (dedup by session+event+timestamp)
+                var localEvents = [];
+                try {
+                    localEvents = JSON.parse(localStorage.getItem('baiddy_events') || '[]');
+                } catch(e) {}
+                var merged = mergeEvents(serverEvents, localEvents);
+                if (merged.length > 0) {
+                    allEvents = normalizeEvents(merged);
+                    showStatus('success', allEvents.length + ' eventi caricati (' + serverEvents.length + ' dal server, ' + localEvents.length + ' locali).');
+                } else {
+                    allEvents = [];
+                    showStatus('info', 'Nessun evento registrato.');
+                }
+                applyFilters();
+                btn.classList.remove('loading');
+                updateLastRefresh();
+            })
+            .catch(function() {
+                // Fallback to localStorage only
+                loadFromLocalStorage();
+                btn.classList.remove('loading');
+                updateLastRefresh();
+            });
+    }
+
+    function mergeEvents(serverEvents, localEvents) {
+        var seen = {};
+        var result = [];
+        function addEvent(e) {
+            var key = (e.session || '') + '|' + (e.event || e.Event || '') + '|' + (e.timestamp || e.Timestamp || '');
+            if (!seen[key]) {
+                seen[key] = true;
+                result.push(e);
+            }
+        }
+        serverEvents.forEach(addEvent);
+        localEvents.forEach(addEvent);
+        return result;
     }
 
     function loadFromLocalStorage() {
@@ -956,7 +996,7 @@
             var stored = JSON.parse(localStorage.getItem('baiddy_events') || '[]');
             if (stored.length > 0) {
                 allEvents = normalizeEvents(stored);
-                showStatus('success', allEvents.length + ' eventi caricati dal sito.');
+                showStatus('success', allEvents.length + ' eventi caricati (solo locali — server non raggiungibile).');
                 applyFilters();
             } else {
                 allEvents = [];
