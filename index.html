@@ -6,31 +6,46 @@
     <title>Baiddy — Vivi la città insieme</title>
     <meta name="description" content="Crea roadmap urbane, unisciti a esperienze condivise e conosci nuove persone nella tua città.">
 
-    <!-- Google tag (GA4) — Replace G-D0EHHLHJ5Q with your Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0EHHLHJ5Q"></script>
+    <!-- Analytics — loaded only after cookie consent -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-D0EHHLHJ5Q');
-    </script>
+      function loadGA4() {
+        if (document.querySelector('script[src*="googletagmanager.com/gtag"]')) return;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-D0EHHLHJ5Q';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-D0EHHLHJ5Q');
+      }
 
-    <!-- Facebook Pixel -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '2373659333063548');
-      fbq('track', 'PageView');
+      function loadFBPixel() {
+        if (window.fbq) return;
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '2373659333063548');
+        fbq('track', 'PageView');
+      }
+
+      function loadAnalytics() {
+        loadGA4();
+        loadFBPixel();
+      }
+
+      // Check consent on page load
+      (function() {
+        var consent = localStorage.getItem('cookie_consent');
+        if (consent === 'accepted') loadAnalytics();
+      })();
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=2373659333063548&ev=PageView&noscript=1"
-    /></noscript>
 
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=aeonik@400,500,600,700&display=swap">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -527,6 +542,22 @@
             color: #fff;
         }
         .footer-social a svg { width: 18px; height: 18px; }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+        }
+        .footer-links a {
+            color: var(--warm-gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--terracotta);
+        }
 
         /* ========== FLOW OVERLAY ========== */
         .flow-overlay {
@@ -1080,6 +1111,74 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        /* ===== Cookie Banner ===== */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10000;
+            background: var(--navy);
+            color: var(--cream);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            transform: translateY(100%);
+            animation: cookieSlideUp 0.4s ease forwards;
+            box-shadow: 0 -4px 24px rgba(0,0,0,0.25);
+        }
+        .cookie-banner.hidden {
+            animation: cookieSlideDown 0.3s ease forwards;
+        }
+        .cookie-banner p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            max-width: 600px;
+            margin: 0;
+        }
+        .cookie-banner-buttons {
+            display: flex;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
+        .cookie-btn {
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.55rem 1.2rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+        .cookie-btn:hover { opacity: 0.85; }
+        .cookie-btn-accept {
+            background: var(--terracotta);
+            color: #fff;
+        }
+        .cookie-btn-reject {
+            background: transparent;
+            color: var(--cream);
+            border: 1.5px solid var(--cream-dark);
+        }
+        @keyframes cookieSlideUp {
+            to { transform: translateY(0); }
+        }
+        @keyframes cookieSlideDown {
+            to { transform: translateY(100%); }
+        }
+        @media (max-width: 600px) {
+            .cookie-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+                padding-bottom: calc(1rem + var(--safe-bottom));
+                gap: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1335,6 +1434,11 @@
         <a href="https://www.facebook.com/share/18ArwT7XYG/" target="_blank" rel="noopener" aria-label="Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         </a>
+    </div>
+    <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <span>&middot;</span>
+        <a href="terms.html">Termini di servizio</a>
     </div>
     &copy; 2026 Baiddy &middot; Conosci nuove persone con roadmap urbane condivise
 </footer>
@@ -1967,6 +2071,43 @@
 
     // Initialize Lucide icons
     lucide.createIcons();
+</script>
+
+<!-- Cookie Banner -->
+<div id="cookieBanner" class="cookie-banner" style="display:none;">
+    <p>Utilizziamo cookie analitici per capire come viene utilizzato il sito e migliorare l'esperienza. Puoi accettare o rifiutare.</p>
+    <div class="cookie-banner-buttons">
+        <button class="cookie-btn cookie-btn-accept" id="cookieAccept">Accetta</button>
+        <button class="cookie-btn cookie-btn-reject" id="cookieReject">Rifiuta</button>
+    </div>
+</div>
+<script>
+(function() {
+    var consent = localStorage.getItem('cookie_consent');
+    if (!consent) {
+        var banner = document.getElementById('cookieBanner');
+        banner.style.display = '';
+    }
+
+    document.getElementById('cookieAccept').addEventListener('click', function() {
+        localStorage.setItem('cookie_consent', 'accepted');
+        loadAnalytics();
+        hideBanner();
+    });
+
+    document.getElementById('cookieReject').addEventListener('click', function() {
+        localStorage.setItem('cookie_consent', 'rejected');
+        hideBanner();
+    });
+
+    function hideBanner() {
+        var banner = document.getElementById('cookieBanner');
+        banner.classList.add('hidden');
+        banner.addEventListener('animationend', function() {
+            banner.style.display = 'none';
+        }, { once: true });
+    }
+})();
 </script>
 
 </body>
