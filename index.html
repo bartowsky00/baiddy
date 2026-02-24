@@ -1206,7 +1206,7 @@
             <div class="hero-avatars">
                 <span>M</span><span>L</span><span>A</span><span>+</span>
             </div>
-            Già <span id="heroCounter">50</span>+ persone in lista d'attesa
+            Già <span id="heroCounter">50+</span> persone in lista d'attesa
         </div>
     </div>
     <div class="hero-image">
@@ -1589,11 +1589,11 @@
         var current = parseInt(localStorage.getItem(heroCounterKey) || '0', 10);
         localStorage.setItem(heroCounterKey, current + 1);
         var el = document.getElementById('heroCounter');
-        if (el) el.textContent = getHeroCount();
+        if (el) el.textContent = getHeroCount() + '+';
     }
     (function initHeroCounter() {
         var el = document.getElementById('heroCounter');
-        if (el) el.textContent = getHeroCount();
+        if (el) el.textContent = getHeroCount() + '+';
     })();
 
     // Fake roadmap data (using text emojis for JS rendering)
