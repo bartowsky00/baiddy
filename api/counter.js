@@ -9,9 +9,16 @@ module.exports = async function handler(req, res) {
     var response = await fetch(SHEET_URL + '?action=read', { redirect: 'follow' });
     var text = await response.text();
     var events = JSON.parse(text);
+    var seen = {};
     var leadCount = 0;
     for (var i = 0; i < events.length; i++) {
-      if (events[i].event === 'lead_submitted') leadCount++;
+      if (events[i].event === 'lead_submitted') {
+        var key = events[i].session;
+        if (key && !seen[key]) {
+          seen[key] = true;
+          leadCount++;
+        }
+      }
     }
     return res.status(200).json({ count: BASE_COUNT + leadCount });
   } catch (err) {
