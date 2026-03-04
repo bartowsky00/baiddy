@@ -6,6 +6,20 @@
     <title>Baiddy — Vivi la città insieme</title>
     <meta name="description" content="Crea roadmap urbane, unisciti a esperienze condivise e conosci nuove persone nella tua città.">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://baiddy.com">
+    <meta property="og:title" content="Baiddy — Vivi la città insieme">
+    <meta property="og:description" content="Crea roadmap urbane, unisciti a esperienze condivise e conosci nuove persone nella tua città.">
+    <meta property="og:image" content="https://baiddy.com/og-image.png">
+    <meta property="og:locale" content="it_IT">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Baiddy — Vivi la città insieme">
+    <meta name="twitter:description" content="Crea roadmap urbane, unisciti a esperienze condivise e conosci nuove persone nella tua città.">
+    <meta name="twitter:image" content="https://baiddy.com/og-image.png">
+
     <!-- Analytics — loaded only after cookie consent -->
     <script>
       function loadGA4() {
@@ -1716,6 +1730,9 @@
         showStep('stepRole');
         lucide.createIcons();
         track('flow_open', { source: source });
+        if (typeof fbq === 'function') {
+            fbq('track', 'ViewContent', { content_name: 'flow', content_category: source });
+        }
     }
 
     function closeFlow() {
@@ -2050,6 +2067,21 @@
             stops_count: currentRole === 'creator' ? creatorStops.length : null,
             roadmap_selected: selectedRoadmap ? selectedRoadmap.title : null
         });
+
+        // Standard Facebook events for campaign optimization
+        if (typeof fbq === 'function') {
+            var eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            fbq('track', 'Lead', {
+                content_name: currentRole,
+                content_category: leadType,
+                event_id: eventId
+            });
+            fbq('track', 'CompleteRegistration', {
+                content_name: currentRole,
+                status: true,
+                event_id: eventId
+            });
+        }
 
         if (currentRole === 'creator') incrementHeroCount();
 
