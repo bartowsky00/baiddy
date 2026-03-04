@@ -1592,20 +1592,23 @@
     let flowSource = '';
 
     // ========== HERO COUNTER ==========
-    const HERO_BASE = 50;
-    const heroCounterKey = 'baiddy_roadmap_count';
-    function getHeroCount() {
-        return HERO_BASE + parseInt(localStorage.getItem(heroCounterKey) || '0', 10);
+    var heroCount = 50;
+    function updateHeroDisplay() {
+        var el = document.getElementById('heroCounter');
+        if (el) el.textContent = heroCount + '+';
     }
     function incrementHeroCount() {
-        var current = parseInt(localStorage.getItem(heroCounterKey) || '0', 10);
-        localStorage.setItem(heroCounterKey, current + 1);
-        var el = document.getElementById('heroCounter');
-        if (el) el.textContent = getHeroCount() + '+';
+        heroCount++;
+        updateHeroDisplay();
     }
     (function initHeroCounter() {
-        var el = document.getElementById('heroCounter');
-        if (el) el.textContent = getHeroCount() + '+';
+        updateHeroDisplay();
+        fetch('/api/counter').then(function(r) { return r.json(); }).then(function(data) {
+            if (data.count && data.count > heroCount) {
+                heroCount = data.count;
+                updateHeroDisplay();
+            }
+        }).catch(function() {});
     })();
 
     // Fake roadmap data (using text emojis for JS rendering)
@@ -2083,7 +2086,7 @@
             });
         }
 
-        if (currentRole === 'creator') incrementHeroCount();
+        incrementHeroCount();
 
         showStep('stepSuccess');
         track('flow_completed', { role: currentRole, source: flowSource });
